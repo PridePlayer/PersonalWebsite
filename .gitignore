@@ -1,0 +1,38 @@
+# ── 依赖与构建产物（不需要进仓库）──
+node_modules/
+stellamp-app/node_modules/
+stellamp-app/dist/
+
+# 本地构建用的环境变量（含接口地址，仅本机用；部署包 deploy/ 已据此构建好）
+stellamp-app/.env
+
+# 本机/沙箱的垃圾与日志
+.trash/
+*.log
+
+# 操作系统垃圾
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# ── 需要保留进仓库的 ──
+# deploy/        ← 服务器 web 根目录直接可用的完整包（已构建好的前端 + PHP 后台）
+# stellamp-api/posts/  ← 示例 .md 文章（内容，需随站部署）
+# .env.example  ← 环境变量模板（不含真实值）
+
+# ── 严禁上传：含真实姓名/简历原文的本地文件 ──
+resume_text.txt
+resume_extracted.txt
+
+# ── 本地散落脚本/中间产物（ardot 取色等，非项目交付物）──
+chunk_*.txt
+conv.py
+extract_resume.py
+gen_recolor.py
+recolor_ops.txt
+
+# ── 本地打包 zip（部署用 deploy/ 目录即可，zip 不必进仓库）──
+stellamp-deploy.zip
+
+# ── 内部记忆/工具目录（含项目隐私笔记，勿公开）──
+.workbuddy/

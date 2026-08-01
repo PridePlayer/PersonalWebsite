@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stellamp · 设计系统 / Design System</title>
+<style>
+  :root{
+    /* ===== 色彩 tokens · 黛紫夜 (Dark) ===== */
+    --bg:#1B1820;            /* 页面背景 · 极夜黑 */
+    --surface:#262230;       /* 卡片 / 弹窗 / 选项 pill · 黛紫黑 */
+    --surface-code:#232320;  /* 代码块背景 */
+    --placeholder:#2E2838;   /* 封面 / 配图占位 */
+    --hairline:#322C3B;      /* 发丝线 / 描边 / 分割线 */
+
+    --text-1:#ECE9F0;        /* 标题 / 正文 · 近白 */
+    --text-2:#B7AEC8;        /* 次级正文 · 浅紫灰 */
+    --text-3:#9A93A8;        /* 次级灰 */
+    --text-4:#7A7390;        /* 元信息 / 提示 · 中紫灰 */
+    --text-btn:#F4F1F8;      /* 按钮文字 */
+    --backlink:#6F6A60;      /* 返回链接 · 暖灰 (遗留/弱化) */
+
+    --accent:#8A7BB0;        /* 强调 · 雾紫 (链接/按钮/标签/规则线) */
+    --accent-press:#7A6BA0;  /* 强调按下态 */
+
+    --code-comment:#8FB7AE;  /* 代码注释 · 薄荷绿 */
+    --code-text:#E6E2D8;     /* 代码正文 · 暖白 */
+
+    /* ===== 字体 ===== */
+    --font-serif:"Noto Serif SC", Georgia, serif;
+    --font-sans:"Noto Sans SC", system-ui, -apple-system, "PingFang SC", sans-serif;
+
+    /* ===== 间距 scale (base 4) ===== */
+    --s-2:8px; --s-3:12px; --s-4:16px; --s-5:18px; --s-6:22px;
+    --s-7:24px; --s-8:30px; --s-10:40px; --s-14:56px; --s-20:80px;
+    --s-25:100px; --s-33:130px; --s-38:150px;
+
+    /* ===== 圆角 ===== */
+    --r-rule:2px; --r-4:4px; --r-8:8px; --r-12:12px;
+
+    /* ===== 栅格 ===== */
+    --canvas:1200px; --gutter:80px; --content:1040px; --art-col:700px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--text-1);
+    font-family:var(--font-sans); font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{color:var(--accent-press);}
+  .wrap{max-width:var(--canvas); margin:0 auto; padding:0 var(--gutter);}
+
+  /* ---------- 顶栏 ---------- */
+  header.topbar{
+    position:sticky; top:0; z-index:50; height:72px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 var(--gutter); background:rgba(27,24,32,.85);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--hairline);
+  }
+  .brand{font-family:var(--font-serif); font-weight:600; font-size:20px; color:var(--text-1);}
+  nav.menu{display:flex; gap:32px; align-items:center;}
+  nav.menu a{color:var(--text-3); font-size:15px;}
+  nav.menu a:hover{color:var(--text-1);}
+  .gate-link{color:var(--text-3); font-size:15px;}
+
+  /* ---------- 区块 ---------- */
+  section{padding:var(--s-38) 0; border-bottom:1px solid var(--hairline);}
+  .eyebrow{
+    font-family:var(--font-sans); font-weight:500; font-size:13px;
+    color:var(--accent); letter-spacing:.08em; text-transform:uppercase;
+    margin:0 0 var(--s-5);
+  }
+  h1.doc-h1{font-family:var(--font-serif); font-weight:600; font-size:44px; line-height:1.18; margin:0 0 var(--s-6);}
+  h2.doc-h2{font-family:var(--font-serif); font-weight:600; font-size:28px; line-height:1.3; margin:0 0 var(--s-6);}
+  .lead{font-size:17px; line-height:30px; color:var(--text-2); max-width:760px;}
+  .sub{color:var(--text-3); font-size:15px; line-height:24px;}
+
+  /* ---------- 色板 ---------- */
+  .swatch-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:var(--s-5);}
+  .swatch{border:1px solid var(--hairline); border-radius:var(--r-4); overflow:hidden; background:var(--surface);}
+  .swatch .chip{height:96px;}
+  .swatch .meta{padding:var(--s-4);}
+  .swatch .name{font-size:14px; font-weight:500; color:var(--text-1);}
+  .swatch .role{font-size:13px; color:var(--text-3); margin:4px 0 8px;}
+  .swatch code{font-size:12px; color:var(--text-4); display:block; font-family:ui-monospace,monospace;}
+
+  /* ---------- 字体排印表 ---------- */
+  table.scale{width:100%; border-collapse:collapse; margin-top:var(--s-6);}
+  table.scale th, table.scale td{text-align:left; padding:var(--s-4) var(--s-3); border-bottom:1px solid var(--hairline); vertical-align:baseline;}
+  table.scale th{color:var(--text-4); font-weight:500; font-size:13px; letter-spacing:.04em; text-transform:uppercase;}
+  table.scale td.token{color:var(--accent); font-family:ui-monospace,monospace; font-size:13px;}
+  table.scale td.spec{color:var(--text-3); font-size:14px; white-space:nowrap;}
+  .type-specimen{margin:0;}
+  .t-display{font-family:var(--font-serif); font-weight:600; font-size:66px; line-height:1.05;}
+  .t-h1{font-family:var(--font-serif); font-weight:600; font-size:44px; line-height:1.18;}
+  .t-h1sec{font-family:var(--font-serif); font-weight:600; font-size:40px; line-height:1.1;}
+  .t-h2{font-family:var(--font-serif); font-weight:600; font-size:26px; line-height:1.2;}
+  .t-h2modal{font-family:var(--font-serif); font-weight:600; font-size:28px; line-height:1.2;}
+  .t-quote{font-family:var(--font-serif); font-weight:500; font-size:19px; line-height:30px;}
+  .t-cardtitle{font-family:var(--font-sans); font-weight:500; font-size:18px; line-height:1.3;}
+  .t-lead{font-family:var(--font-sans); font-weight:400; font-size:18px; line-height:30px;}
+  .t-bodyl{font-family:var(--font-sans); font-weight:400; font-size:17px; line-height:30px;}
+  .t-body{font-family:var(--font-sans); font-weight:400; font-size:16px; line-height:26px;}
+  .t-bodys{font-family:var(--font-sans); font-weight:400; font-size:15px; line-height:24px;}
+  .t-meta{font-family:var(--font-sans); font-weight:400; font-size:14px; line-height:1.4;}
+  .t-caption{font-family:var(--font-sans); font-weight:500; font-size:13px; letter-spacing:.04em;}
+  .t-nav{font-family:var(--font-sans); font-weight:400; font-size:15px;}
+  .t-button{font-family:var(--font-sans); font-weight:500; font-size:14px;}
+
+  /* ---------- 间距 / 圆角 ---------- */
+  .space-row{display:flex; align-items:flex-end; gap:var(--s-4); flex-wrap:wrap; margin-top:var(--s-6);}
+  .space-box{background:var(--accent); border-radius:var(--r-rule);}
+  .space-label{font-size:12px; color:var(--text-4); font-family:ui-monospace,monospace;}
+  .radius-row{display:flex; gap:var(--s-6); margin-top:var(--s-6); flex-wrap:wrap;}
+  .radius-demo{width:96px; height:96px; background:var(--surface); border:1px solid var(--hairline); display:flex; align-items:center; justify-content:center; color:var(--text-3); font-size:13px;}
+  .radius-demo.r2{border-radius:var(--r-rule);} .radius-demo.r4{border-radius:var(--r-4);}
+  .radius-demo.r8{border-radius:var(--r-8);} .radius-demo.r12{border-radius:var(--r-12);}
+
+  /* ---------- 组件 specimens ---------- */
+  .specimen{background:var(--surface); border:1px solid var(--hairline); border-radius:var(--r-8); padding:var(--s-10); margin-top:var(--s-6);}
+  .specimen .tag{font-size:12px; color:var(--text-4); text-transform:uppercase; letter-spacing:.08em; margin-bottom:var(--s-5); display:block;}
+
+  /* Hero */
+  .hero-kicker{font-size:13px; font-weight:500; color:var(--accent); letter-spacing:.06em; margin-bottom:var(--s-5);}
+  .hero-name{font-family:var(--font-serif); font-weight:600; font-size:66px; line-height:1.05; color:var(--text-1); margin:0;}
+  .hero-handle{font-size:18px; font-weight:500; color:var(--accent); margin:var(--s-4) 0;}
+  .hero-rule{width:56px; height:3px; background:var(--accent); border-radius:var(--r-rule); margin:var(--s-5) 0;}
+  .hero-id{font-size:20px; color:var(--text-2); margin:0 0 var(--s-5);}
+  .hero-statement{font-size:17px; line-height:30px; color:var(--text-3); max-width:660px; margin:0;}
+
+  /* 按钮 */
+  .btn-primary{display:inline-flex; align-items:center; background:var(--accent); color:var(--text-btn);
+    font-size:14px; font-weight:500; padding:var(--s-4) var(--s-5); border-radius:var(--r-4); border:none; cursor:pointer;}
+  .btn-primary:active{background:var(--accent-press);}
+  .btn-text{display:inline-flex; align-items:center; color:var(--accent); font-size:14px; font-weight:500; background:none; border:none; cursor:pointer; padding:0;}
+
+  /* Project card */
+  .card{background:var(--surface); border:1px solid var(--hairline); border-radius:var(--r-4); padding:var(--s-7); max-width:480px;}
+  .card .c-name{font-size:18px; font-weight:500; color:var(--text-1); margin:0 0 var(--s-3);}
+  .card .c-desc{font-size:15px; line-height:24px; color:var(--text-3); margin:0 0 var(--s-6);}
+  .card .c-tag{font-size:13px; color:var(--accent); margin:0 0 var(--s-3);}
+  .card .c-url{font-size:13px; color:var(--text-4); margin:0;}
+
+  /* Blog post row */
+  .post{background:var(--surface); border:1px solid var(--hairline); border-radius:var(--r-4); padding:var(--s-7); max-width:1040px;}
+  .post .p-meta{font-size:13px; color:var(--text-4); margin:0 0 var(--s-3);}
+  .post .p-title{font-family:var(--font-serif); font-weight:500; font-size:22px; line-height:1.3; color:var(--text-1); margin:0 0 var(--s-3);}
+  .post .p-excerpt{font-size:15px; line-height:24px; color:var(--text-3); margin:0 0 var(--s-4); max-width:900px;}
+  .post .p-more{font-size:14px; font-weight:500; color:var(--accent);}
+
+  /* Tag pill */
+  .pill{display:inline-flex; align-items:center; background:var(--surface); border:1px solid var(--hairline); border-radius:999px; padding:6px 14px; font-size:13px; color:var(--accent);}
+
+  /* Article specimen */
+  .art-col{max-width:var(--art-col);}
+  .art-kicker{font-size:13px; font-weight:500; color:var(--accent); margin:0 0 var(--s-5);}
+  .art-title{font-family:var(--font-serif); font-weight:600; font-size:44px; line-height:56px; color:var(--text-1); margin:0 0 var(--s-5);}
+  .art-dek{font-size:19px; line-height:30px; color:var(--text-2); margin:0 0 var(--s-6);}
+  .art-meta{display:flex; gap:10px; align-items:center; color:var(--text-4); font-size:14px; margin:0 0 var(--s-5);}
+  .art-h2{font-family:var(--font-serif); font-weight:600; font-size:26px; line-height:1.2; color:var(--text-1); margin:var(--s-8) 0 var(--s-5);}
+  .art-p{font-size:17px; line-height:30px; color:var(--text-3); margin:0 0 var(--s-6);}
+  .art-quote{border-left:3px solid var(--accent); padding:0 0 0 var(--s-6); margin:var(--s-8) 0;}
+  .art-quote .q{font-family:var(--font-serif); font-weight:500; font-size:19px; line-height:30px; color:var(--text-1); margin:0 0 var(--s-3);}
+  .art-quote .a{font-size:14px; color:var(--text-4); margin:0;}
+  .art-code{background:var(--surface-code); border-radius:var(--r-4); padding:var(--s-7); font-family:ui-monospace,monospace; font-size:14px; line-height:24px; color:var(--code-text);}
+  .art-code .cm{color:var(--code-comment);}
+  .art-img{background:var(--placeholder); border:1px solid var(--hairline); border-radius:var(--r-4); height:320px; display:flex; align-items:flex-end; padding:var(--s-4);}
+  .art-img span{font-size:13px; color:var(--text-4);}
+  .art-caption{font-size:13px; color:var(--text-4); margin-top:var(--s-3);}
+
+  /* Modal */
+  .modal-stage{background:rgba(0,0,0,.5); border-radius:var(--r-8); padding:var(--s-10); display:flex; justify-content:center;}
+  .modal{background:var(--surface); border:1px solid var(--hairline); border-radius:var(--r-8); width:560px; max-width:100%; padding:var(--s-10); position:relative;}
+  .modal .close{position:absolute; top:var(--s-10); right:var(--s-10); width:24px; height:24px; border-radius:var(--r-12); background:var(--hairline);}
+  .modal .m-kicker{font-size:13px; font-weight:500; color:var(--accent); margin:0 0 var(--s-3);}
+  .modal .m-head{font-family:var(--font-serif); font-weight:600; font-size:28px; line-height:1.2; color:var(--text-1); margin:0 0 var(--s-4);}
+  .modal .m-desc{font-size:15px; line-height:26px; color:var(--text-2); margin:0 0 var(--s-6);}
+  .modal .m-rule{width:40px; height:3px; background:var(--accent); border-radius:var(--r-rule); margin-bottom:var(--s-7);}
+  .q-block{border-bottom:1px solid var(--hairline); padding:var(--s-5) 0;}
+  .q-block .q-t{font-size:15px; color:var(--text-1); margin:0 0 var(--s-4);}
+  .q-opt{display:inline-flex; margin:0 var(--s-3) var(--s-3) 0; background:var(--bg); border:1px solid var(--hairline); border-radius:var(--r-4); padding:8px 14px; font-size:14px; color:var(--text-2);}
+  .modal .m-note{font-size:13px; color:var(--text-4); margin:var(--s-7) 0 var(--s-5);}
+  .modal .m-gate{display:inline-flex; background:var(--accent); color:var(--text-btn); font-size:14px; font-weight:500; padding:var(--s-4) var(--s-5); border-radius:var(--r-4);}
+
+  /* Footer */
+  footer.site{padding:var(--s-10) var(--gutter); border-top:1px solid var(--hairline); color:var(--text-4); font-size:14px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:var(--s-5);}
+  footer.site a{color:var(--text-3); margin-right:var(--s-5);}
+
+  /* IA flow */
+  .ia{display:flex; align-items:center; gap:var(--s-5); flex-wrap:wrap;}
+  .ia .node{background:var(--surface); border:1px solid var(--hairline); border-radius:var(--r-4); padding:var(--s-5) var(--s-6); min-width:140px;}
+  .ia .node b{display:block; color:var(--text-1); font-size:15px; margin-bottom:4px;}
+  .ia .node span{font-size:12px; color:var(--text-4);}
+  .ia .arrow{color:var(--accent); font-size:20px;}
+  .ia .node.gate{border-color:var(--accent);}
+  .ia .node.gate b{color:var(--accent);}
+
+  /* token export */
+  pre.export{background:var(--surface-code); border:1px solid var(--hairline); border-radius:var(--r-4); padding:var(--s-7); overflow:auto; font-family:ui-monospace,monospace; font-size:13px; line-height:22px; color:var(--code-text);}
+  pre.export .c{color:var(--code-comment);}
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:var(--s-10);}
+  @media(max-width:900px){.two-col{grid-template-columns:1fr;}}
+  .note{font-size:13px; color:var(--text-4); margin-top:var(--s-4);}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="brand">Stellamp</span>
+  <nav class="menu">
+    <a href="#overview">关于</a>
+    <a href="#tokens">作品</a>
+    <a href="#type">博客</a>
+    <span class="gate-link">🔒 幕后</span>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ 概览 ============ -->
+  <section id="overview">
+    <p class="eyebrow">Stellamp · Design System</p>
+    <h1 class="doc-h1">stellingamp 设计系统 · 黛紫夜</h1>
+    <p class="lead">这是个人站点 <b>stellamp.me</b>（作者网名 <b>prideplayer</b>）的官方设计系统。整体走「编辑式极简 + 暗色档案」路线：衬线标题建立气质，无衬线正文保证可读，雾紫（#8A7BB0）作为唯一强调色，克制地用在链接、按钮、标签与规则线上。</p>
+    <p class="sub" style="margin-top:24px">品牌约定：<b>绝不在任何公开页面露出真实姓名</b>。现实经历完整存在，但需通过右上角「🔒 幕后」触发的隐私验证弹窗（答对熟人才能答上的细节）才能进入。本系统覆盖 5 个画布的视觉与组件规范。</p>
+
+    <div class="ia" style="margin-top:40px">
+      <div class="node"><b>首页</b><span>2:2 · Hero / 关于 / 作品 / 博客</span></div>
+      <span class="arrow">→</span>
+      <div class="node"><b>博客列表</b><span>2:266 · 文章索引</span></div>
+      <span class="arrow">→</span>
+      <div class="node"><b>文章详情</b><span>3:2 · 700px 阅读栏</span></div>
+      <span class="arrow">·</span>
+      <div class="node gate"><b>🔒 幕后屏</b><span>2:123 · 现实经历</span></div>
+      <span class="arrow">↑</span>
+      <div class="node gate"><b>隐私验证弹窗</b><span>4:1 · 三题门禁</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 色彩 ============ -->
+  <section id="tokens">
+    <p class="eyebrow">Color Tokens</p>
+    <h2 class="doc-h2">色彩系统 · 黛紫夜</h2>
+    <p class="sub">暗色主题的核心逻辑是「反转而非单纯压暗」：背景压到极夜黑，所有文字从深变浅（标题→近白，正文→浅紫灰，元信息→中紫灰），强调色统一为雾紫。层级完全靠「明度 + 紫调」区分，不靠多彩。</p>
+    <div class="swatch-grid" style="margin-top:32px">
+      <div class="swatch"><div class="chip" style="background:#1B1820"></div><div class="meta"><div class="name">背景 Background</div><div class="role">页面底色</div><code>#1B1820</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#262230"></div><div class="meta"><div class="name">表面 Surface</div><div class="role">卡片 / 弹窗 / pill</div><code>#262230</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#2E2838"></div><div class="meta"><div class="name">占位 Placeholder</div><div class="role">封面 / 配图</div><code>#2E2838</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#232320"></div><div class="meta"><div class="name">代码底 Code</div><div class="role">代码块背景</div><code>#232320</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#322C3B"></div><div class="meta"><div class="name">发丝线 Hairline</div><div class="role">描边 / 分割线</div><code>#322C3B</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#8A7BB0"></div><div class="meta"><div class="name">强调 Accent</div><div class="role">雾紫 · 链接/按钮/标签</div><code>#8A7BB0</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#ECE9F0"></div><div class="meta"><div class="name">文字-1 Text/1</div><div class="role">标题 / 正文 · 近白</div><code>#ECE9F0</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#B7AEC8"></div><div class="meta"><div class="name">文字-2 Text/2</div><div class="role">次级正文 · 浅紫灰</div><code>#B7AEC8</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#9A93A8"></div><div class="meta"><div class="name">文字-3 Text/3</div><div class="role">次级灰</div><code>#9A93A8</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#7A7390"></div><div class="meta"><div class="name">文字-4 Text/4</div><div class="role">元信息 / 提示</div><code>#7A7390</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#F4F1F8"></div><div class="meta"><div class="name">按钮文字</div><div class="role">主按钮标签</div><code>#F4F1F8</code></div></div>
+      <div class="swatch"><div class="chip" style="background:#6F6A60"></div><div class="meta"><div class="name">返回链接</div><div class="role">暖灰 · 弱化（遗留）</div><code>#6F6A60</code></div></div>
+    </div>
+    <p class="note">可访问性：文字-1 (#ECE9F0) 在背景 (#1B1820) 上对比度约 14.5:1（远超 AA）。文字-4 (#7A7390) 仅用于非关键元信息，不在正文使用。强调色雾紫 (#8A7BB0) 作背景配按钮文字 #F4F1F8 对比度约 4.6:1，过 AA。</p>
+  </section>
+
+  <!-- ============ 字体排印 ============ -->
+  <section id="type">
+    <p class="eyebrow">Typography</p>
+    <h2 class="doc-h2">字体排印</h2>
+    <p class="sub">双字体体系：<b>Noto Serif SC</b>（衬线）只用于标题、引用、品牌字，建立编辑气质；<b>Noto Sans SC</b>（无衬线）用于正文、UI、元信息，保证屏幕可读性。字重仅用 Regular(400) / Medium(500) / SemiBold(600) 三档，避免杂乱。</p>
+
+    <table class="scale">
+      <thead><tr><th>Token</th><th>样式</th><th>字号 / 行高</th><th>字体 · 字重</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td class="token">display</td><td><span class="t-display type-specimen">Stellamp</span></td><td class="spec">66 / 1.05</td><td class="spec">Serif · 600</td><td>首页 Hero 主名</td></tr>
+        <tr><td class="token">h1</td><td><span class="t-h1 type-specimen">文章标题</span></td><td class="spec">44 / 56</td><td class="spec">Serif · 600</td><td>文章详情大标题</td></tr>
+        <tr><td class="token">h1-section</td><td><span class="t-h1sec type-specimen">博客</span></td><td class="spec">40 / 1.1</td><td class="spec">Serif · 600</td><td>页面级标题（博客等）</td></tr>
+        <tr><td class="token">h2-modal</td><td><span class="t-h2modal type-specimen">幕后 · 现实生活经历</span></td><td class="spec">28 / 1.2</td><td class="spec">Serif · 600</td><td>弹窗 / 区块标题</td></tr>
+        <tr><td class="token">h2</td><td><span class="t-h2 type-specimen">一、为什么不用现成的</span></td><td class="spec">26 / 1.2</td><td class="spec">Serif · 600</td><td>文章小节标题</td></tr>
+        <tr><td class="token">quote</td><td><span class="t-quote type-specimen">做软件最难的不是写第一行代码…</span></td><td class="spec">19 / 30</td><td class="spec">Serif · 500</td><td>引言 / 金句</td></tr>
+        <tr><td class="token">card-title</td><td><span class="t-cardtitle type-specimen">观星记 Starte</span></td><td class="spec">18 / 1.3</td><td class="spec">Sans · 500</td><td>作品卡标题</td></tr>
+        <tr><td class="token">lead</td><td><span class="t-lead type-specimen">大三那年冬天，我盯着桌面上一堆壁纸…</span></td><td class="spec">18 / 30</td><td class="spec">Sans · 400</td><td>文章导语段</td></tr>
+        <tr><td class="token">body-l</td><td><span class="t-bodyl type-specimen">市面上的壁纸软件要么太重，要么广告太多。</span></td><td class="spec">17 / 30</td><td class="spec">Sans · 400</td><td>Hero 陈述 / 文章正文</td></tr>
+        <tr><td class="token">body</td><td><span class="t-body type-specimen">平时写的一些东西——项目复盘、设计随笔。</span></td><td class="spec">16 / 26</td><td class="spec">Sans · 400</td><td>博客描述</td></tr>
+        <tr><td class="token">body-s</td><td><span class="t-bodys type-specimen">从 Electron 到壁纸引擎，一个人把兴趣做成软件。</span></td><td class="spec">15 / 24</td><td class="spec">Sans · 400</td><td>卡片描述 / 摘要 / 弹窗正文</td></tr>
+        <tr><td class="token">meta</td><td><span class="t-meta type-specimen">2026 年 2 月 14 日 · 约 9 分钟阅读</span></td><td class="spec">14 / 1.4</td><td class="spec">Sans · 400</td><td>文章元信息 / 代码 / 引用署名</td></tr>
+        <tr><td class="token">caption</td><td><span class="t-caption type-specimen">2026.02 · 技术</span></td><td class="spec">13 / —</td><td class="spec">Sans · 500</td><td>眉标 / 标签 / 署名</td></tr>
+        <tr><td class="token">nav</td><td><span class="t-nav type-specimen">← 返回博客</span></td><td class="spec">15 / —</td><td class="spec">Sans · 400</td><td>导航 / 返回链接</td></tr>
+        <tr><td class="token">button</td><td><span class="t-button type-specimen">验证并进入幕后 →</span></td><td class="spec">14 / —</td><td class="spec">Sans · 500</td><td>按钮标签</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ 间距 / 圆角 ============ -->
+  <section id="space">
+    <p class="eyebrow">Spacing & Radius</p>
+    <h2 class="doc-h2">间距与圆角</h2>
+    <div class="two-col">
+      <div>
+        <p class="sub">间距以 4px 为基准栅格。常用：8 / 12 / 16 / 18 / 22 / 24 / 30 / 40 / 56 / 80 / 100 / 130 / 150。</p>
+        <div class="space-row">
+          <div><div class="space-box" style="width:8px;height:8px"></div><div class="space-label">8</div></div>
+          <div><div class="space-box" style="width:16px;height:16px"></div><div class="space-label">16</div></div>
+          <div><div class="space-box" style="width:24px;height:24px"></div><div class="space-label">24</div></div>
+          <div><div class="space-box" style="width:40px;height:40px"></div><div class="space-label">40</div></div>
+          <div><div class="space-box" style="width:80px;height:80px"></div><div class="space-label">80</div></div>
+        </div>
+        <p class="sub" style="margin-top:24px">栅格：画布 1200px，左右留白 80px（内容栏 1040px）；文章阅读栏居中 700px（左右各 250px）。顶栏高 72px，页脚高 190px。作品卡 480×191，两列排布。</p>
+      </div>
+      <div>
+        <p class="sub">圆角分四档，克制使用：</p>
+        <div class="radius-row">
+          <div class="radius-demo r2">2px<br>规则线</div>
+          <div class="radius-demo r4">4px<br>卡片/按钮</div>
+          <div class="radius-demo r8">8px<br>弹窗</div>
+          <div class="radius-demo r12">12px<br>圆形按钮</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 组件库 ============ -->
+  <section id="components">
+    <p class="eyebrow">Components</p>
+    <h2 class="doc-h2">组件库</h2>
+
+    <div class="specimen">
+      <span class="tag">Hero · 首屏</span>
+      <p class="hero-kicker">STELLAMP.ME — 线上创作集</p>
+      <p class="hero-name">Stellamp</p>
+      <p class="hero-handle">@prideplayer</p>
+      <div class="hero-rule"></div>
+      <p class="hero-id">独立开发者 · 维基与同人宇宙的搭建者</p>
+      <p class="hero-statement">在网络上写代码、做网站、搭百科——把喜欢的电影宇宙和深夜灵感，变成别人也能走进去的小世界。这里收录我这些年的线上作品与折腾。</p>
+    </div>
+
+    <div class="specimen">
+      <span class="tag">Buttons · 按钮</span>
+      <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+        <button class="btn-primary">验证并进入幕后 →</button>
+        <button class="btn-text">阅读 →</button>
+        <span class="pill">Electron · 跨平台</span>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <span class="tag">Project Card · 作品卡</span>
+      <div class="card">
+        <p class="c-name">观星记 Starte</p>
+        <p class="c-desc">利用 Electron 等跨平台技术开发的多功能星空壁纸软件，「闲时探寻星空之美」。</p>
+        <p class="c-tag">Electron · 跨平台</p>
+        <p class="c-url">stellamp.me/starte</p>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <span class="tag">Blog Post Row · 博客列表项</span>
+      <div class="post">
+        <p class="p-meta">2026.02 · 技术</p>
+        <p class="p-title">「观星记 Starte」是怎么做出来的</p>
+        <p class="p-excerpt">从 Electron 到壁纸引擎，一个人把「闲时探寻星空之美」的兴趣，慢慢做成了一款能装在别人电脑上的软件。这篇讲讲全过程。</p>
+        <span class="p-more">阅读 →</span>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <span class="tag">Article · 文章详情（700px 阅读栏节选）</span>
+      <div class="art-col">
+        <p class="art-kicker">2026.02 · 技术</p>
+        <p class="art-title">「观星记 Starte」是怎么做出来的</p>
+        <p class="art-dek">从 Electron 到壁纸引擎，一个人把兴趣做成能装在别人电脑上的软件。这篇讲讲从想法到上线的全过程。</p>
+        <p class="art-meta"><span>2026 年 2 月 14 日</span><span>·</span><span>约 9 分钟阅读</span></p>
+
+        <h3 class="art-h2">一、为什么不用现成的</h3>
+        <p class="art-p">市面上的壁纸软件要么太重，要么广告太多。我想要的是轻、干净、且能离线运行的东西。跨平台是硬需求——我自己用 Windows，朋友多用 macOS，总不能只服务一边。</p>
+
+        <div class="art-quote">
+          <p class="q">做软件最难的不是写第一行代码，而是把想做完这件事，一天天坚持下去。</p>
+          <p class="a">—— 写在 Starte 上线那天</p>
+        </div>
+
+        <h3 class="art-h2">二、技术选型与结构</h3>
+        <p class="art-p">核心只是一个星空渲染循环，把它挂到系统壁纸接口上。下面这段是引擎初始化的骨架：</p>
+        <div class="art-code">
+<span class="cm">// 初始化星空壁纸引擎</span><br>
+const engine = new StarteEngine({<br>
+&nbsp;&nbsp;source: 'assets/starfield/',<br>
+&nbsp;&nbsp;fps: 30,<br>
+});<br>
+engine.start();
+        </div>
+        <div class="art-img" style="margin-top:24px"><span>示意图 · 软件主界面</span></div>
+        <p class="art-caption">主界面左侧是星空预览，右侧是按时间编排的播放列表。</p>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <span class="tag">Privacy Modal · 隐私验证弹窗（560 × 853）</span>
+      <div class="modal-stage">
+        <div class="modal">
+          <div class="close"></div>
+          <p class="m-kicker">PRIVATE · 仅熟人</p>
+          <p class="m-head">幕后 · 现实生活经历</p>
+          <p class="m-desc">这部分是我的现实生活轨迹，比较私人。请先答对下面几个只有熟人知道的细节——陌生人一般答不上来，但认识我的人应该没问题。</p>
+          <div class="m-rule"></div>
+
+          <div class="q-block">
+            <p class="q-t">Q1 · 我来自江苏的哪座城市？</p>
+            <span class="q-opt">南京</span><span class="q-opt">苏州</span><span class="q-opt">无锡</span><span class="q-opt">连云港</span>
+          </div>
+          <div class="q-block">
+            <p class="q-t">Q2 · 我曾参加哪一年的北京大学全国中学生模拟联合国大会？</p>
+            <span class="q-opt">二〇二三</span><span class="q-opt">二〇二四</span><span class="q-opt">二〇二五</span><span class="q-opt">二〇二六</span>
+          </div>
+          <div class="q-block" style="border:none">
+            <p class="q-t">Q3 · 我高中时和同学一起首创的校内报纸叫什么？</p>
+            <span class="q-opt">新海潮</span><span class="q-opt">青春纪</span><span class="q-opt">校刊</span><span class="q-opt">凌云新声</span>
+          </div>
+
+          <p class="m-note">* 答错任意一题将无法进入，这是有意为之的门禁。</p>
+          <span class="m-gate">验证并进入幕后 →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Token 导出 ============ -->
+  <section id="export">
+    <p class="eyebrow">Token Export</p>
+    <h2 class="doc-h2">可直接复用的 CSS 变量</h2>
+    <p class="sub">把下面这段 :root 粘进代码，即可在网页端 1:1 还原黛紫夜主题。</p>
+    <pre class="export"><span class="c">/* Stellamp · 黛紫夜 Design Tokens */</span>
+:root{
+  --bg:#1B1820;  --surface:#262230;  --surface-code:#232320;
+  --placeholder:#2E2838;  --hairline:#322C3B;
+  --text-1:#ECE9F0;  --text-2:#B7AEC8;  --text-3:#9A93A8;
+  --text-4:#7A7390;  --text-btn:#F4F1F8;  --backlink:#6F6A60;
+  --accent:#8A7BB0;  --accent-press:#7A6BA0;
+  --code-comment:#8FB7AE;  --code-text:#E6E2D8;
+  --font-serif:"Noto Serif SC", Georgia, serif;
+  --font-sans:"Noto Sans SC", system-ui, sans-serif;
+  --gutter:80px;  --content:1040px;  --art-col:700px;
+  --r-rule:2px; --r-4:4px; --r-8:8px; --r-12:12px;
+}</pre>
+  </section>
+
+</div>
+
+<footer class="site">
+  <div>© Stellamp · prideplayer · stellamp.me — 设计系统 v1.0（黛紫夜）</div>
+  <div>
+    <a href="#overview">概览</a><a href="#tokens">色彩</a><a href="#type">字体</a><a href="#components">组件</a>
+  </div>
+</footer>
+
+</body>
+</html>

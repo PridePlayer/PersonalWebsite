@@ -1,0 +1,234 @@
+/* ============================================================
+   Stellamp · 黛紫夜 (Dark) Design Tokens
+   严格还原 ardot 设计稿 (file 710157850380631)
+   ============================================================ */
+:root {
+  /* 色彩 */
+  --bg: #1B1820;            /* 页面背景 · 极夜黑 */
+  --surface: #262230;       /* 卡片 / 弹窗 / 选项 pill */
+  --surface-code: #232320;  /* 代码块背景 */
+  --placeholder: #2E2838;   /* 封面 / 配图占位 */
+  --hairline: #322C3B;      /* 发丝线 / 描边 / 分割线 */
+
+  --text-1: #ECE9F0;        /* 标题 / 正文 · 近白 */
+  --text-2: #B7AEC8;        /* 次级正文 · 浅紫灰 */
+  --text-3: #9A93A8;        /* 次级灰 */
+  --text-4: #7A7390;        /* 元信息 / 提示 · 中紫灰 */
+  --text-btn: #F4F1F8;      /* 按钮文字 */
+  --backlink: #6F6A60;      /* 返回链接 · 暖灰 */
+
+  --accent: #8A7BB0;        /* 强调 · 雾紫 */
+  --accent-press: #7A6BA0;  /* 强调按下态 */
+
+  --code-comment: #8FB7AE;  /* 代码注释 · 薄荷绿 */
+  --code-text: #E6E2D8;     /* 代码正文 · 暖白 */
+
+  /* 字体 */
+  --font-serif: "Noto Serif SC", Georgia, "Songti SC", serif;
+  --font-sans: "Noto Sans SC", system-ui, -apple-system, "PingFang SC", sans-serif;
+
+  /* 栅格 / 间距（基准 4） */
+  --gutter: 80px;
+  --content: 1040px;
+  --art-col: 700px;
+
+  /* 圆角 */
+  --r-rule: 2px;
+  --r-4: 4px;
+  --r-8: 8px;
+  --r-12: 12px;
+  --r-pill: 20px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;          /* 移动端防横向溢出 */
+}
+img, svg, video, canvas { max-width: 100%; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-press); }
+button { font-family: inherit; cursor: pointer; }
+
+/* ---------- 布局容器：1200px 画布 + 80px 留白 ---------- */
+.site {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* ---------- 通用排版类 ---------- */
+.kicker {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+/* 页面级区块标题（首页 关于/作品/博客）：设计稿 40px */
+.h-page {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.15;
+  color: var(--text-1);
+  margin: 0;
+}
+/* 子区块标题（幕后各小节等）：26px */
+.h-section {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.3;
+  color: var(--text-1);
+  margin: 0 0 20px;
+}
+.h-modal {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--text-1);
+  margin: 0;
+}
+.lead {
+  font-size: 17px;
+  line-height: 30px;
+  color: var(--text-2);
+}
+.body {
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--text-3);
+}
+.sub { color: var(--text-3); font-size: 15px; line-height: 24px; }
+
+/* ---------- 按钮 ---------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  background: var(--accent);
+  color: var(--text-btn);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  padding: 14px 20px;
+  border: none;
+  border-radius: var(--r-4);
+  transition: background 0.15s ease;
+}
+.btn-primary:hover { background: var(--accent-press); }
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.btn-text:hover { color: var(--accent-press); }
+
+/* ---------- 卡片（仅项目卡 / 弹窗 / pill / 幕后卡片用） ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-4);
+  padding: 24px;
+}
+
+/* ---------- 标签 / 选项 pill ---------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--accent);
+  font-family: var(--font-sans);
+}
+
+/* ---------- 规则线（雾紫短横） ---------- */
+.rule {
+  width: 56px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: var(--r-rule);
+  display: block;
+}
+
+/* ---------- 返回条（博客 / 文章 / 幕后 页首，含底部发丝线） ---------- */
+.page-backbar {
+  height: 72px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--hairline);
+}
+.back-inner {
+  height: 72px;
+  display: flex;
+  align-items: center;
+}
+.back-link {
+  color: var(--backlink);
+  font-size: 14px;
+  font-family: var(--font-sans);
+}
+.back-link:hover { color: var(--text-2); }
+
+/* ---------- 区块通用 ---------- */
+/* 仅设置上下内边距，左右留白由 .site 提供（避免 shorthand 覆盖 gutter） */
+.section {
+  padding-top: 100px;
+  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+}
+.section.about   { gap: 24px; }
+.section.projects,
+.section.blog    { gap: 28px; }
+.hairline-b { border-bottom: 1px solid var(--hairline); }
+
+/* ============================================================
+   响应式：保留 1200 画布，窄屏重排（通用响应式）
+   ============================================================ */
+@media (max-width: 1280px) {
+  :root { --gutter: 56px; }
+}
+@media (max-width: 1024px) {
+  :root { --gutter: 40px; }
+  .h-page { font-size: 34px; }
+  .h-section { font-size: 24px; }
+}
+@media (max-width: 768px) {
+  :root { --gutter: 24px; }
+  .site { padding-left: var(--gutter); padding-right: var(--gutter); }
+  .section { padding-top: 64px; padding-bottom: 48px; }
+  .section.about,
+  .section.projects,
+  .section.blog { gap: 20px; }
+  .h-page { font-size: 30px; }
+  .h-section { font-size: 22px; }
+  .lead { font-size: 16px; line-height: 28px; }
+  .projects-grid > *,
+  .honors > *,
+  .skills > * { min-width: 0; }
+}
+@media (max-width: 480px) {
+  :root { --gutter: 18px; }
+}

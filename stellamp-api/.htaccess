@@ -1,0 +1,5 @@
+# Apache 重写：让 /api/xxx 落到 index.php（无重写也能用 ?r= 形式）
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [L]
