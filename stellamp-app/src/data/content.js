@@ -6,25 +6,37 @@ export const projects = [
     name: '观星记 Starte',
     desc: '利用 Electron 等跨平台技术开发的多功能星空壁纸软件，「闲时探寻星空之美」。',
     tag: 'Electron · 跨平台',
-    url: 'starte.zestela.co'
+    url: 'starte.zestela.co',
+    team: '与 zestela 团队共同开发',
+    teamName: 'zestela',
+    teamUrl: 'https://zestela.co'
   },
   {
     name: 'United Earth Wiki',
     desc: '《流浪地球》系列电影周边免费在线百科，记录电影世界观，服务广大电影爱好者。',
     tag: 'Wiki · 百科',
-    url: 'unitedearth.wiki'
+    url: 'unitedearth.wiki',
+    team: '与 United Earth Team (UET) 联合制作',
+    teamName: 'UET',
+    teamUrl: 'https://uet.life'
   },
   {
     name: 'United Earth Government',
     desc: '《流浪地球》系列电影周边同人二创网站，贴近电影世界观内的地球联合政府。',
     tag: '同人站 · 二创',
-    url: 'uegov.world'
+    url: 'uegov.world',
+    team: '与 United Earth Team (UET) 联合制作',
+    teamName: 'UET',
+    teamUrl: 'https://uet.life'
   },
   {
     name: 'Lyrics Share',
     desc: '利用 Vue.js 等技术开发制作的歌词画报分享在线工具，让每一句感人的文字以最优雅的视觉姿态呈现在社交平台。',
     tag: 'Vue.js · 在线工具',
-    url: 'lyrics.zestela.co'
+    url: 'lyrics.zestela.co',
+    team: '与 zestela 团队共同开发',
+    teamName: 'zestela',
+    teamUrl: 'https://zestela.co'
   }
 ]
 

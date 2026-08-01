@@ -5,8 +5,8 @@ return [
     // .md 文章存放目录（相对本文件）
     'posts_dir' => __DIR__ . '/posts',
 
-    // 后台登录密码（请改成你自己的强密码）
-    'admin_password' => 'change-me-please',
+    // 后台登录密码
+    'admin_password' => 'stellampprideplayer',
 
     // 站点标题（用于后台页头）
     'site_title' => 'Stellamp',

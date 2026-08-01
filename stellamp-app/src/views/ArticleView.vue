@@ -105,8 +105,8 @@ function go(slug) {
 
 <style scoped>
 .article-shell { display: block; }
-.article-view { padding-bottom: 100px; }
-.loading { padding-top: 120px; padding-bottom: 160px; color: var(--text-4); font-size: 15px; }
+.article-view { padding-bottom: 80px; }
+.loading { padding-top: 96px; padding-bottom: 140px; color: var(--text-4); font-size: 15px; }
 .back-link {
   display: inline-block;
   color: var(--backlink);
@@ -122,14 +122,15 @@ function go(slug) {
 .art-head {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding-top: 64px;
+  gap: 16px;
+  padding-top: 52px;
 }
 .art-title {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 44px;
-  line-height: 1.2;
+  font-size: 36px;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
   color: var(--text-1);
   margin: 0;
 }
@@ -171,10 +172,10 @@ function go(slug) {
 .b-h2 {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 26px;
-  line-height: 1.3;
+  font-size: 22px;
+  line-height: 1.35;
   color: var(--text-1);
-  margin: 40px 0 16px;
+  margin: 36px 0 14px;
 }
 .b-p {
   font-size: 17px;
@@ -273,9 +274,9 @@ function go(slug) {
 .missing .sub { margin-top: 14px; }
 
 @media (max-width: 768px) {
-  .art-title { font-size: 32px; }
+  .art-title { font-size: 28px; }
   .article-col { padding: 0 24px; }
-  .art-head { padding-top: 48px; }
+  .art-head { padding-top: 40px; }
   .art-foot { padding-left: 24px; padding-right: 24px; }
 }
 </style>
