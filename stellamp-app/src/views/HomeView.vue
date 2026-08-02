@@ -14,10 +14,10 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
 
 <template>
   <div class="home-view">
-  <!-- Hero -->
-  <section class="hero site">
+  <!-- Hero：全宽背景，内容居中 -->
+  <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
-    <div class="hero-inner">
+    <div class="hero-inner site">
       <p class="kicker">STELLAMP.ME — 线上创作集</p>
       <h1 class="hero-name">Stellamp</h1>
       <p class="hero-handle">@prideplayer</p>
@@ -91,6 +91,7 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
 .hero {
   position: relative;
   overflow: hidden;
+  width: 100%;
   padding-top: 120px;
   padding-bottom: 104px;
 }
@@ -114,7 +115,8 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
     radial-gradient(1px 1px at 84% 52%, rgba(236,233,240,0.35), transparent 60%),
     radial-gradient(1px 1px at 54% 40%, rgba(236,233,240,0.30), transparent 60%),
     radial-gradient(1.2px 1.2px at 28% 80%, rgba(236,233,240,0.30), transparent 60%),
-    radial-gradient(120% 90% at 50% -10%, rgba(138,123,176,0.12), transparent 70%);
+    /* 雾紫环境光：横贯整幅宽度的线性渐变，顶部左右都铺到，向下淡出 */
+    linear-gradient(180deg, rgba(138,123,176,0.13) 0%, rgba(138,123,176,0.04) 38%, transparent 72%);
 }
 .hero-bg::after {
   content: "";
@@ -127,7 +129,7 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
 .hero-name {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 54px;
+  font-size: 46px;
   line-height: 1.08;
   letter-spacing: -0.01em;
   color: var(--text-1);
@@ -141,15 +143,15 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
   margin: 0;
 }
 .hero-identity {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-2);
   font-family: var(--font-sans);
   margin: 0;
 }
 .hero-statement {
-  font-size: 17px;
-  line-height: 30px;
+  font-size: 16px;
+  line-height: 29px;
   color: var(--text-3);
   max-width: 660px;
   margin: 0;
@@ -206,10 +208,10 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
 
 @media (max-width: 768px) {
   .hero { padding-top: 80px; padding-bottom: 68px; }
-  .hero-name { font-size: 42px; }
+  .hero-name { font-size: 38px; }
   .projects-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
-  .hero-name { font-size: 36px; }
+  .hero-name { font-size: 32px; }
 }
 </style>

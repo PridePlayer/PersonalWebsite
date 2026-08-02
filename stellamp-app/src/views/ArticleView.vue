@@ -140,15 +140,15 @@ function go(slug) {
 .art-title {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 36px;
+  font-size: 32px;
   line-height: 1.22;
   letter-spacing: -0.01em;
   color: var(--text-1);
   margin: 0;
 }
 .art-dek {
-  font-size: 18px;
-  line-height: 29px;
+  font-size: 17px;
+  line-height: 28px;
   color: var(--text-2);
   margin: 0;
 }
@@ -159,8 +159,8 @@ function go(slug) {
   margin: 0;
 }
 .art-lead {
-  font-size: 18px;
-  line-height: 31px;
+  font-size: 17px;
+  line-height: 30px;
   color: var(--text-2);
   margin: 32px 0 8px;
 }
@@ -184,14 +184,14 @@ function go(slug) {
 .b-h2 {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.35;
   color: var(--text-1);
   margin: 36px 0 14px;
 }
 .b-p {
-  font-size: 17px;
-  line-height: 30px;
+  font-size: 16px;
+  line-height: 29px;
   color: var(--text-2);
   margin: 0 0 22px;
 }
@@ -202,7 +202,7 @@ function go(slug) {
 }
 .b-quote-text {
   font-family: var(--font-serif);
-  font-size: 19px;
+  font-size: 18px;
   line-height: 30px;
   color: var(--text-1);
   margin: 0 0 8px;
@@ -286,7 +286,7 @@ function go(slug) {
 .missing .sub { margin-top: 14px; }
 
 @media (max-width: 768px) {
-  .art-title { font-size: 28px; }
+  .art-title { font-size: 25px; }
   .article-col { padding: 0 24px; }
   .art-head { padding-top: 40px; }
   .art-foot { padding-left: 24px; padding-right: 24px; }

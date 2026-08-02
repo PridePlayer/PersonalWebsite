@@ -28,8 +28,8 @@
   --font-sans: "Noto Sans SC", system-ui, -apple-system, "PingFang SC", sans-serif;
 
   /* 栅格 / 间距（基准 4） */
-  --gutter: 80px;
-  --content: 1040px;
+  --gutter: 32px;
+  --content: 1280px;
   --art-col: 700px;
 
   /* 圆角 */
@@ -78,10 +78,10 @@ button { font-family: inherit; cursor: pointer; }
 ::-webkit-scrollbar-thumb:active { background: var(--accent-press); }
 ::-webkit-scrollbar-corner { background: transparent; }
 
-/* ---------- 布局容器：1200px 画布 + 80px 留白 ---------- */
+/* ---------- 布局容器：1400px 画布 + 32px 留白 ---------- */
 .site {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding-left: var(--gutter);
   padding-right: var(--gutter);
@@ -96,21 +96,21 @@ button { font-family: inherit; cursor: pointer; }
   letter-spacing: 0.06em;
   margin: 0;
 }
-/* 页面级区块标题（首页 关于/作品/博客）：收小至 32px 更显克制 */
+/* 页面级区块标题（首页 关于/作品/博客）：收小至 28px 更显克制 */
 .h-page {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 32px;
+  font-size: 28px;
   line-height: 1.18;
   letter-spacing: -0.005em;
   color: var(--text-1);
   margin: 0;
 }
-/* 子区块标题（幕后各小节等）：收小至 22px */
+/* 子区块标题（幕后各小节等）：收小至 20px */
 .h-section {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.35;
   color: var(--text-1);
   margin: 0 0 16px;
@@ -118,14 +118,14 @@ button { font-family: inherit; cursor: pointer; }
 .h-modal {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.25;
   color: var(--text-1);
   margin: 0;
 }
 .lead {
-  font-size: 17px;
-  line-height: 30px;
+  font-size: 16px;
+  line-height: 29px;
   color: var(--text-2);
 }
 .body {
@@ -133,7 +133,7 @@ button { font-family: inherit; cursor: pointer; }
   line-height: 26px;
   color: var(--text-3);
 }
-.sub { color: var(--text-3); font-size: 15px; line-height: 24px; }
+.sub { color: var(--text-3); font-size: 14px; line-height: 23px; }
 
 /* ---------- 按钮 ---------- */
 .btn-primary {
@@ -227,29 +227,29 @@ button { font-family: inherit; cursor: pointer; }
    响应式：保留 1200 画布，窄屏重排（通用响应式）
    ============================================================ */
 @media (max-width: 1280px) {
-  :root { --gutter: 56px; }
+  :root { --gutter: 28px; }
 }
 @media (max-width: 1024px) {
-  :root { --gutter: 40px; }
-  .h-page { font-size: 28px; }
-  .h-section { font-size: 20px; }
+  :root { --gutter: 24px; }
+  .h-page { font-size: 25px; }
+  .h-section { font-size: 19px; }
 }
 @media (max-width: 768px) {
-  :root { --gutter: 24px; }
+  :root { --gutter: 18px; }
   .site { padding-left: var(--gutter); padding-right: var(--gutter); }
   .section { padding-top: 52px; padding-bottom: 40px; }
   .section.about,
   .section.projects,
   .section.blog { gap: 18px; }
-  .h-page { font-size: 24px; }
-  .h-section { font-size: 18px; }
-  .lead { font-size: 16px; line-height: 28px; }
+  .h-page { font-size: 22px; }
+  .h-section { font-size: 17px; }
+  .lead { font-size: 15px; line-height: 27px; }
   .projects-grid > *,
   .honors > *,
   .skills > * { min-width: 0; }
 }
 @media (max-width: 480px) {
-  :root { --gutter: 18px; }
+  :root { --gutter: 14px; }
 }
 
 /* ---------- 标题进场：微位移淡入（0.3s） ---------- */
