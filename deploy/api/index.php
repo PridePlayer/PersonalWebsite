@@ -54,6 +54,25 @@ function is_authed(): bool
 // ---------- 接口 ----------
 $path = route_path();
 
+// 全局兜底：接口请求若发生未捕获异常/致命错误，返回 JSON 而非裸 PHP 错误页，
+// 否则前端会把 HTML 当 JSON 解析而报错并卡在「上传中」。
+$is_api = !($path === '/admin' || $path === '/');
+set_exception_handler(function ($e) use (&$is_api) {
+    if (!$is_api || headers_sent()) return;
+    http_response_code(500);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['ok' => false, 'error' => '服务器错误：' . $e->getMessage()]);
+});
+register_shutdown_function(function () use (&$is_api) {
+    if (!$is_api || headers_sent()) return;
+    $err = error_get_last();
+    if ($err && in_array($err['type'], [E_ERROR, E_PARSE, E_COMPILE_ERROR], true)) {
+        http_response_code(500);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['ok' => false, 'error' => '服务器致命错误：' . $err['message']]);
+    }
+});
+
 if ($path === '/posts' && $_SERVER['REQUEST_METHOD'] === 'GET') {
     send_json(stellamp_list_posts($CONFIG['posts_dir']));
 }
@@ -89,19 +108,22 @@ if ($path === '/admin/upload' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     if (!isset($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
-        send_json(['ok' => false, 'error' => '没有收到文件'], 400);
+        send_json(['ok' => false, 'error' => '没有收到文件（可能超过服务器上传大小限制 post_max_size / upload_max_filesize）'], 400);
     }
     $name = $_FILES['file']['name'];
-    // 仅允许 .md，并做安全化文件名
     if (!preg_match('/\.md$/i', $name)) {
         send_json(['ok' => false, 'error' => '只接受 .md 文件'], 400);
+    }
+    $dir = $CONFIG['posts_dir'];
+    if (!is_dir($dir) || !is_writable($dir)) {
+        send_json(['ok' => false, 'error' => '服务器 posts 目录不可写，请在服务器执行：chmod -R 755 api/posts'], 500);
     }
     $slug = preg_replace('/[^A-Za-z0-9\-_]/', '-', pathinfo($name, PATHINFO_FILENAME));
     $slug = strtolower(trim($slug, '-'));
     if ($slug === '') $slug = 'post-' . time();
-    $dest = $CONFIG['posts_dir'] . '/' . $slug . '.md';
-    if (!move_uploaded_file($_FILES['file']['tmp_name'], $dest)) {
-        send_json(['ok' => false, 'error' => '保存失败'], 500);
+    $dest = $dir . '/' . $slug . '.md';
+    if (!@move_uploaded_file($_FILES['file']['tmp_name'], $dest)) {
+        send_json(['ok' => false, 'error' => '保存失败：move_uploaded_file 被拒绝（检查 posts 目录权限与安全策略）'], 500);
     }
     send_json(['ok' => true, 'slug' => $slug]);
 }
@@ -140,9 +162,14 @@ button{background:#8A7BB0;border:none;color:#F4F1F8;font-weight:500;margin-top:1
 </form><div class="msg" id="msg"></div>
 <script>
 document.getElementById('f').addEventListener('submit',async e=>{
-  e.preventDefault();const fd=new FormData(e.target);
-  const r=await fetch('?r=admin/login',{method:'POST',body:fd});const j=await r.json();
-  if(j.ok){location.href='?r=admin';}else{document.getElementById('msg').textContent=j.error||'登录失败';}
+  e.preventDefault();
+  try{
+    const fd=new FormData(e.target);
+    const r=await fetch('?r=admin/login',{method:'POST',body:fd});
+    const text=await r.text();
+    let j; try{ j=JSON.parse(text); }catch(_){ document.getElementById('msg').textContent='服务器返回异常：'+text.slice(0,200); return; }
+    if(j.ok){location.href='?r=admin';}else{document.getElementById('msg').textContent=j.error||'登录失败';}
+  }catch(err){ document.getElementById('msg').textContent='网络错误：'+err.message; }
 });
 </script></div></body></html>
 HTML;
@@ -207,13 +234,16 @@ document.getElementById('up').addEventListener('click',async()=>{
   if(!f){msg.className='msg err';msg.textContent='请先选择 .md 文件';return;}
   const fd=new FormData();fd.append('file',f);
   msg.className='msg';msg.textContent='上传中…';
-  const r=await fetch('?r=admin/upload',{method:'POST',body:fd});
-  const j=await r.json();
-  if(j.ok){msg.className='msg ok';msg.textContent='已发布，slug: '+j.slug;}
-  else{msg.className='msg err';msg.textContent=j.error||'上传失败';}
+  try{
+    const r=await fetch('?r=admin/upload',{method:'POST',body:fd});
+    const text=await r.text();
+    let j; try{ j=JSON.parse(text); }catch(_){ msg.className='msg err'; msg.textContent='服务器返回非 JSON：'+text.slice(0,300); return; }
+    if(j.ok){msg.className='msg ok';msg.textContent='已发布，slug: '+j.slug;}
+    else{msg.className='msg err';msg.textContent=j.error||('上传失败（HTTP '+r.status+'）');}
+  }catch(err){ msg.className='msg err'; msg.textContent='网络错误：'+err.message; }
 });
 document.getElementById('logout').addEventListener('click',async()=>{
-  await fetch('?r=admin/logout',{method:'POST'});
+  try{ await fetch('?r=admin/logout',{method:'POST'}); }catch(_){}
   location.href='?r=admin';
 });
 </script>
