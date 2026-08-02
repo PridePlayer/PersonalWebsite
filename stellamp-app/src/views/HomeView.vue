@@ -5,7 +5,7 @@ import { usePosts } from '../data/useContent'
 import ProjectCard from '../components/ProjectCard.vue'
 import BlogPostRow from '../components/BlogPostRow.vue'
 
-const { posts, load } = usePosts()
+const { posts, loading, usingFallback, apiError, apiMode, load } = usePosts()
 onMounted(load)
 
 // 首页博客区只放最新三篇（mini 样式），其余引导去 /blog
@@ -69,6 +69,7 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
     <h2 class="h-page">博客</h2>
     <span class="title-rule"></span>
     <p class="sub blog-desc">平时写的一些东西——项目复盘、设计随笔、折腾记录。下面挑了几篇最近的。</p>
+    <p v-if="apiMode && usingFallback" class="api-warn">{{ apiError }}</p>
     <div class="blog-list">
       <BlogPostRow
         v-for="p in teaserPosts"
@@ -182,6 +183,19 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
   max-width: var(--content);
 }
 .more { align-self: flex-start; font-size: 14px; }
+
+/* 后台接口未连通的提示（仅在部署版且接口失败时显示） */
+.api-warn {
+  font-size: 13px;
+  line-height: 22px;
+  color: #E2A0A0;
+  background: rgba(226, 160, 160, 0.08);
+  border: 1px solid rgba(226, 160, 160, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  max-width: var(--content);
+  margin: 14px 0 0;
+}
 
 /* 区块标题进场微位移淡入 */
 .h-page { animation: titleIn 0.3s ease both; }

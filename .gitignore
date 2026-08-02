@@ -17,8 +17,14 @@ ehthumbs.db
 
 # ── 需要保留进仓库的 ──
 # deploy/        ← 服务器 web 根目录直接可用的完整包（已构建好的前端 + PHP 后台）
-# stellamp-api/posts/  ← 示例 .md 文章（内容，需随站部署）
+# stellamp-api/posts/  ← 示例 .md 文章（源码参考，仅本地/源仓库保留）
 # .env.example  ← 环境变量模板（不含真实值）
+
+# ── 运行时数据：用户通过后台上传的文章，不纳入版本控制 ──
+# 目的：git pull / push 永远不碰这个目录，避免用户上传的文章被覆盖、冲突或丢失。
+# 仅用 .gitkeep 占位，保证全新 clone 后 deploy/api/posts/ 目录存在（PHP 需要该目录）。
+deploy/api/posts/*
+!deploy/api/posts/.gitkeep
 
 # ── 严禁上传：含真实姓名/简历原文的本地文件 ──
 resume_text.txt

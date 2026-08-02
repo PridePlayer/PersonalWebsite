@@ -16,7 +16,7 @@ deploy/
     └── posts/        ← 你的 .md 文章（已含 5 篇示例）
 ```
 
-> 接口已写死为 `/api`，所以 `deploy/` 放到网站根目录后，前端会自动从 `/api/posts` 拉文章。
+> 前端通过 `/api/index.php?r=posts` 这类**查询串**请求后台，因此**不需要**在服务器配置任何 URL 重写（Apache 的 `.htaccess` / Nginx 的 `try_files` 都已是可选，不配也能跑）。只要 `deploy/api/index.php` 能被 PHP 执行即可。
 
 ---
 
@@ -55,15 +55,29 @@ deploy/
 
 ---
 
-## Nginx 额外配置（Apache 自带 .htaccess，无需此步）
+## Nginx 配置（可选）
 
-在 server 块加一条，让 `/api/` 下的请求落到 PHP：
+前端用的是 `/api/index.php?r=posts` 查询串，**默认不需要任何重写**。只有在你想用「干净路径」`/api/posts` 时才需要以下配置（Apache 的 `.htaccess` 同理可省）：
 
 ```nginx
 location /api/ {
   try_files $uri $uri/ /api/index.php?$args;
 }
 ```
+
+## 怎么验证后台接口通了
+
+上传后，直接在浏览器打开（把域名换成你的）：
+
+```
+https://你的域名/api/index.php?r=posts
+```
+
+- 返回类似 `[{"slug":"...","title":"..."}]` 的 JSON → 接口正常，页面会实时显示这些文章；
+- 返回 `[]` → 接口正常但目录里没有文章（删光后就是这个状态）；
+- 返回一整页 HTML / 报错 → PHP 没执行或目录不对，按下方排查。
+
+如果前端页面仍然显示「内置示例文章」并出现红色提示条「后台接口未连通」，说明前端没连上这个接口，先拿上面这条 URL 自检。
 
 
 

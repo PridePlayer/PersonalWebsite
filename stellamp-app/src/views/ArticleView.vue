@@ -8,7 +8,7 @@ const props = defineProps({
 })
 const router = useRouter()
 
-const { article, loading, notFound, load } = useArticle()
+const { article, loading, notFound, usingFallback, apiError, apiMode, load } = useArticle()
 const { posts } = usePosts()
 
 onMounted(() => load(props.slug))
@@ -33,7 +33,8 @@ function go(slug) {
   <div class="article-shell">
   <div v-if="loading" class="site loading">加载中…</div>
 
-  <div v-else-if="article" class="article-view">
+    <div v-else-if="article" class="article-view">
+    <p v-if="apiMode && usingFallback" class="api-warn">{{ apiError }}</p>
     <!-- 返回条（含底部发丝线） -->
     <header class="page-backbar">
       <div class="site back-inner">
@@ -107,6 +108,17 @@ function go(slug) {
 .article-shell { display: block; }
 .article-view { padding-bottom: 80px; }
 .loading { padding-top: 96px; padding-bottom: 140px; color: var(--text-4); font-size: 15px; }
+.api-warn {
+  max-width: var(--art-col);
+  margin: 0 auto;
+  font-size: 13px;
+  line-height: 22px;
+  color: #E2A0A0;
+  background: rgba(226, 160, 160, 0.08);
+  border: 1px solid rgba(226, 160, 160, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
 .back-link {
   display: inline-block;
   color: var(--backlink);
