@@ -68,6 +68,7 @@ function goBehind() {
 }
 .menu a,
 .link-btn {
+  position: relative;
   color: var(--text-3);
   font-size: 15px;
   font-family: var(--font-sans);
@@ -81,6 +82,7 @@ function goBehind() {
 .link-btn:hover { color: var(--text-1); }
 .menu a.router-link-exact-active { color: var(--text-1); border-bottom: 2px solid var(--accent); }
 .gate-link {
+  position: relative;
   color: var(--text-3);
   font-size: 15px;
   font-family: var(--font-sans);
@@ -90,6 +92,26 @@ function goBehind() {
   padding: 0 0 4px;
 }
 .gate-link:hover { color: var(--text-1); }
+/* 导航下划线微交互：hover 时由左展开，极轻、不喧宾夺主 */
+.menu a::after,
+.link-btn::after,
+.gate-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.24s var(--ease-out);
+}
+.menu a:hover::after,
+.link-btn:hover::after,
+.gate-link:hover::after {
+  transform: scaleX(1);
+}
 @media (max-width: 480px) {
   .menu { gap: 18px; }
   .menu a, .link-btn, .gate-link { font-size: 14px; }

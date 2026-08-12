@@ -60,7 +60,7 @@ function openProject() {
   grid-template-columns: 48px 1fr auto;
   gap: 0 28px;
   align-items: start;
-  padding: 26px 0;
+  padding: 26px 16px;
   border-top: 1px solid var(--hairline);
   cursor: pointer;
 }
@@ -78,7 +78,7 @@ function openProject() {
   letter-spacing: 0.08em;
   color: var(--text-4);
   padding-top: 4px;
-  transition: color 0.15s ease;
+  transition: color 0.24s var(--ease-out);
 }
 .project-card:hover .c-no { color: var(--accent); }
 .c-body { min-width: 0; }
@@ -95,7 +95,7 @@ function openProject() {
   font-family: var(--font-sans);
   color: var(--text-1);
   margin: 0;
-  transition: color 0.15s ease;
+  transition: color 0.24s var(--ease-out);
 }
 .project-card:hover .c-name { color: var(--accent); }
 .c-tag {
@@ -123,7 +123,7 @@ function openProject() {
   color: var(--text-4);
   font-family: var(--font-sans);
   margin: 0;
-  transition: color 0.15s ease;
+  transition: color 0.24s var(--ease-out);
 }
 .project-card:hover .c-url { color: var(--accent); }
 .c-team-site {
@@ -134,7 +134,7 @@ function openProject() {
   padding: 3px 10px;
   border: 1px solid var(--hairline);
   border-radius: var(--r-pill);
-  transition: border-color 0.15s ease, color 0.15s ease;
+  transition: border-color 0.24s var(--ease-out), color 0.24s var(--ease-out);
   white-space: nowrap;
 }
 .c-team-site:hover {
@@ -147,7 +147,7 @@ function openProject() {
   color: var(--accent);
   opacity: 0;
   transform: translateX(-4px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition: opacity 0.24s var(--ease-out), transform 0.24s var(--ease-out);
   padding-top: 4px;
 }
 .project-card:hover .c-go { opacity: 1; transform: translateX(0); }

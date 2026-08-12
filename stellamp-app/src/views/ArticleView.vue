@@ -43,7 +43,7 @@ function go(slug) {
       <div class="sec-main">
     <p v-if="apiMode && usingFallback" class="api-warn">{{ apiError }}</p>
     <article class="article-col">
-      <div class="art-head">
+      <div class="art-head" v-reveal>
         <p class="kicker">{{ article.kicker }}</p>
         <h1 class="art-title">{{ article.title }}</h1>
         <p class="art-dek">{{ article.dek }}</p>

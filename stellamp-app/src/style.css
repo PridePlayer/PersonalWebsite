@@ -33,7 +33,7 @@
   --art-col: 700px;
 
   /* 全屏竖向栏规线（背景层） */
-  --vline: rgba(17, 17, 17, 0.05);
+  --vline: rgba(17, 17, 17, 0.06);
   --vline-gap: 88px;
 
   /* 圆角 · 瑞士偏硬朗，收最小 */
@@ -42,6 +42,10 @@
   --r-8: 3px;
   --r-12: 4px;
   --r-pill: 999px;
+
+  /* 缓动曲线：自然、克制、舒适 */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * { box-sizing: border-box; }
@@ -281,8 +285,27 @@ button { font-family: inherit; cursor: pointer; }
   :root { --gutter: 24px; }
 }
 
-/* ---------- 标题进场：微位移淡入（0.3s） ---------- */
-@keyframes titleIn {
-  from { opacity: 0; transform: translateY(10px); }
+/* ---------- 滚动进场：极轻淡入 + 微上移，--i 控制错落 ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.reveal.is-visible {
+  animation: revealUp 0.7s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 全局「减少动态」总闸：去动画、保终态 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
 }

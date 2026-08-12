@@ -7,7 +7,7 @@ import Breadcrumb from '../components/Breadcrumb.vue'
   <div class="behind-view">
     <Breadcrumb current="幕后" />
 
-    <section class="section site behind-head">
+    <section class="section site behind-head" v-reveal>
       <div class="sec-index">
         <span class="sec-no">00</span>
         <span class="sec-tag">幕后</span>
@@ -18,7 +18,7 @@ import Breadcrumb from '../components/Breadcrumb.vue'
     </section>
 
     <!-- 教育经历 -->
-    <section class="section site block compact">
+    <section class="section site block compact" v-reveal>
       <div class="sec-index">
         <span class="sec-no">01</span>
         <span class="sec-tag">教育经历</span>
@@ -34,7 +34,7 @@ import Breadcrumb from '../components/Breadcrumb.vue'
     </section>
 
     <!-- 任职经历 -->
-    <section class="section site block compact">
+    <section class="section site block compact" v-reveal>
       <div class="sec-index">
         <span class="sec-no">02</span>
         <span class="sec-tag">任职经历</span>
@@ -53,7 +53,7 @@ import Breadcrumb from '../components/Breadcrumb.vue'
     </section>
 
     <!-- 模拟联合国 -->
-    <section class="section site block compact">
+    <section class="section site block compact" v-reveal>
       <div class="sec-index">
         <span class="sec-no">03</span>
         <span class="sec-tag">模拟联合国</span>
@@ -69,7 +69,7 @@ import Breadcrumb from '../components/Breadcrumb.vue'
     </section>
 
     <!-- 技能与兴趣 -->
-    <section class="section site block compact">
+    <section class="section site block compact" v-reveal>
       <div class="sec-index">
         <span class="sec-no">04</span>
         <span class="sec-tag">技能与兴趣</span>

@@ -20,7 +20,7 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
     <div class="hero-inner site">
       <div class="hero-main">
         <p class="kicker">STELLAMP.ME</p>
-        <h1 class="hero-name">Stellamp</h1>
+        <h1 class="hero-name" v-reveal>Stellamp</h1>
         <p class="hero-handle">@prideplayer</p>
         <span class="rule"></span>
         <p class="hero-identity">开发者 · 制作者 · 写作者</p>
@@ -28,7 +28,7 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
           人是寻求意义的动物，每个人都在追求生命的意义，从而人不能被单一定义，所有的兴趣所有的向往构成了人的本身。
         </p>
       </div>
-      <aside class="hero-quote">
+      <aside class="hero-quote" v-reveal>
         <blockquote class="hq-inner">
           <p class="hq-line">我一直要活到我能够</p>
           <p class="hq-line">历数前生，你能够</p>
@@ -63,6 +63,7 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
       <p class="sub projects-intro">下面是这几年我做过的线上项目——工具、百科、同人站，以及两款可以亲自走进去玩的线上游戏。观星记 Starte 与 Lyrics Share 是与 zestela 团队共同开发的；United Earth Wiki 与 United Earth Government 则是我和 United Earth Team（UET）联合制作的。</p>
       <div class="projects-grid">
         <ProjectCard
+          v-reveal="i + 1"
           v-for="(p, i) in projects"
           :key="p.name"
           :no="i + 1"
@@ -89,6 +90,7 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
       <p v-if="apiMode && usingFallback" class="api-warn">{{ apiError }}</p>
       <div class="blog-list">
         <BlogPostRow
+          v-reveal="i + 1"
           v-for="(p, i) in teaserPosts"
           :key="p.slug"
           variant="mini"
@@ -145,7 +147,6 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
   letter-spacing: -0.02em;
   color: var(--text-1);
   margin: 0;
-  animation: titleIn 0.3s ease both;
 }
 .hero-handle {
   font-size: 16px;
@@ -240,12 +241,7 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
   margin: 14px 0 0;
 }
 
-/* 区块标题进场微位移淡入 */
-.h-page { animation: titleIn 0.3s ease both; }
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-name, .h-page { animation: none; }
-}
+/* 进场统一交由 .reveal / v-reveal 处理 */
 
 @media (max-width: 768px) {
   .hero { padding-top: 104px; padding-bottom: 88px; }

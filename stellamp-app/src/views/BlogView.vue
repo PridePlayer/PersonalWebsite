@@ -21,6 +21,7 @@ onMounted(load)
         <p class="sub blog-desc">平时写的一些东西——项目复盘、设计随笔、折腾记录。不定时更新，想到什么写什么。</p>
         <div class="blog-list">
           <BlogPostRow
+            v-reveal="i + 1"
             v-for="(p, i) in posts"
             :key="p.slug"
             variant="full"
