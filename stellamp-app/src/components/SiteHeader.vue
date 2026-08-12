@@ -30,7 +30,7 @@ function goBehind() {
       <nav class="menu">
         <button class="link-btn" @click="goSection('about')">关于</button>
         <button class="link-btn" @click="goSection('projects')">作品</button>
-        <router-link to="/blog">博客</router-link>
+        <router-link to="/blog" class="link-btn">博客</router-link>
         <button class="gate-link" @click="goBehind">幕后</button>
       </nav>
     </div>
@@ -74,8 +74,13 @@ function goBehind() {
   font-family: var(--font-sans);
   letter-spacing: 0.02em;
   background: none;
-  border: none;
+  /* 彻底重置 <button> 原生外观，否则上/左/右会露出浏览器默认黑框 */
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
   padding: 0 0 4px;
+  line-height: inherit;
   cursor: pointer;
 }
 .menu a:hover,
@@ -88,8 +93,12 @@ function goBehind() {
   font-family: var(--font-sans);
   letter-spacing: 0.02em;
   background: none;
-  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
   padding: 0 0 4px;
+  line-height: inherit;
 }
 .gate-link:hover { color: var(--text-1); }
 /* 导航下划线微交互：hover 时由左展开，极轻、不喧宾夺主 */

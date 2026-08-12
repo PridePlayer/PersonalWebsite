@@ -262,11 +262,10 @@ function go(slug) {
   .article-col { padding: 0; }
   .art-head { padding-top: 40px; }
   .art-foot { padding-left: 0; padding-right: 0; }
-  /* 文章页读数：突破 .site 全局 gutter，改用更窄的阅读边距，正文更宽更好读
-     （仅作用于文章页，不影响首页/博客列表等其他页） */
+  /* 文章页读数：仅缩小左右留白（用 padding，不用负 margin，
+     否则内容会被推出视口左缘造成“左边被截断”）；
+     仅作用于文章页，不影响首页/博客列表等其他页 */
   .art-section {
-    margin-left: calc(-1 * var(--gutter));
-    margin-right: calc(-1 * var(--gutter));
     padding-left: 22px;
     padding-right: 22px;
   }
