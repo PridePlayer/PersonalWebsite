@@ -43,7 +43,7 @@ function goBehind() {
   top: 0;
   z-index: 50;
   height: 72px;
-  background: rgba(27, 24, 32, 0.85);
+  background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--hairline);
 }
@@ -55,8 +55,9 @@ function goBehind() {
 }
 .brand {
   font-family: var(--font-serif);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 20px;
+  letter-spacing: -0.01em;
   color: var(--text-1);
 }
 .brand:hover { color: var(--text-1); }
@@ -70,21 +71,23 @@ function goBehind() {
   color: var(--text-3);
   font-size: 15px;
   font-family: var(--font-sans);
+  letter-spacing: 0.02em;
   background: none;
   border: none;
-  padding: 0;
+  padding: 0 0 4px;
   cursor: pointer;
 }
 .menu a:hover,
 .link-btn:hover { color: var(--text-1); }
-.menu a.router-link-exact-active { color: var(--text-1); }
+.menu a.router-link-exact-active { color: var(--text-1); border-bottom: 2px solid var(--accent); }
 .gate-link {
   color: var(--text-3);
   font-size: 15px;
   font-family: var(--font-sans);
+  letter-spacing: 0.02em;
   background: none;
   border: none;
-  padding: 0;
+  padding: 0 0 4px;
 }
 .gate-link:hover { color: var(--text-1); }
 @media (max-width: 480px) {

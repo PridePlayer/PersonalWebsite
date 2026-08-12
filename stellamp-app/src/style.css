@@ -1,43 +1,47 @@
 /* ============================================================
-   Stellamp · 黛紫夜 (Dark) Design Tokens
-   严格还原 ardot 设计稿 (file 710157850380631)
+   Stellamp · 瑞士国际主义 (Swiss International Style) Design Tokens
+   白底 + 近黑墨色 + 单一蓝色强调 · Helvetica / Akzidenz 无衬线
    ============================================================ */
 :root {
   /* 色彩 */
-  --bg: #1B1820;            /* 页面背景 · 极夜黑 */
-  --surface: #262230;       /* 卡片 / 弹窗 / 选项 pill */
-  --surface-code: #232320;  /* 代码块背景 */
-  --placeholder: #2E2838;   /* 封面 / 配图占位 */
-  --hairline: #322C3B;      /* 发丝线 / 描边 / 分割线 */
+  --bg: #FFFFFF;            /* 页面背景 · 纯白 */
+  --surface: #FFFFFF;       /* 卡片 / 弹窗 / 选项 pill */
+  --surface-code: #F4F4F4;  /* 代码块背景 */
+  --placeholder: #ECECEC;   /* 封面 / 配图占位 */
+  --hairline: #E2E2E2;      /* 发丝线 / 描边 / 分割线 */
 
-  --text-1: #ECE9F0;        /* 标题 / 正文 · 近白 */
-  --text-2: #B7AEC8;        /* 次级正文 · 浅紫灰 */
-  --text-3: #9A93A8;        /* 次级灰 */
-  --text-4: #7A7390;        /* 元信息 / 提示 · 中紫灰 */
-  --text-btn: #F4F1F8;      /* 按钮文字 */
-  --backlink: #6F6A60;      /* 返回链接 · 暖灰 */
+  --text-1: #111111;        /* 标题 / 正文 · 近黑墨 */
+  --text-2: #3A3A3A;        /* 次级正文 */
+  --text-3: #6A6A6A;        /* 次级灰 */
+  --text-4: #9A9A9A;        /* 元信息 / 提示 */
+  --text-btn: #FFFFFF;      /* 按钮文字 */
+  --backlink: #6A6A6A;      /* 返回链接 */
 
-  --accent: #8A7BB0;        /* 强调 · 雾紫 */
-  --accent-press: #7A6BA0;  /* 强调按下态 */
+  --accent: #3B6FB5;        /* 强调 · 蓝 */
+  --accent-press: #2E5894;  /* 强调按下态 */
 
-  --code-comment: #8FB7AE;  /* 代码注释 · 薄荷绿 */
-  --code-text: #E6E2D8;     /* 代码正文 · 暖白 */
+  --code-comment: #9AA7B5;  /* 代码注释 */
+  --code-text: #2A2A2A;     /* 代码正文 */
 
-  /* 字体 */
-  --font-serif: "Noto Serif SC", Georgia, "Songti SC", serif;
-  --font-sans: "Noto Sans SC", system-ui, -apple-system, "PingFang SC", sans-serif;
+  /* 字体 · Helvetica / Akzidenz 风格无衬线 + 中文思源黑体 */
+  --font-serif: "Helvetica Neue", Helvetica, Arial, "Source Han Sans SC", "思源黑体", "Noto Sans SC", system-ui, sans-serif;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, "Source Han Sans SC", "思源黑体", "Noto Sans SC", system-ui, sans-serif;
 
-  /* 栅格 / 间距（基准 4） */
-  --gutter: 32px;
+  /* 栅格 / 间距 */
+  --gutter: 64px;
   --content: 1280px;
   --art-col: 700px;
 
-  /* 圆角 */
+  /* 全屏竖向栏规线（背景层） */
+  --vline: rgba(17, 17, 17, 0.05);
+  --vline-gap: 88px;
+
+  /* 圆角 · 瑞士偏硬朗，收最小 */
   --r-rule: 2px;
-  --r-4: 4px;
-  --r-8: 8px;
-  --r-12: 12px;
-  --r-pill: 20px;
+  --r-4: 2px;
+  --r-8: 3px;
+  --r-12: 4px;
+  --r-pill: 999px;
 }
 
 * { box-sizing: border-box; }
@@ -100,7 +104,7 @@ button { font-family: inherit; cursor: pointer; }
 .h-page {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 28px;
+  font-size: 34px;
   line-height: 1.18;
   letter-spacing: -0.005em;
   color: var(--text-1);
@@ -176,7 +180,7 @@ button { font-family: inherit; cursor: pointer; }
   align-items: center;
   background: var(--surface);
   border: 1px solid var(--hairline);
-  border-radius: var(--r-pill);
+  border-radius: var(--r-4);
   padding: 6px 14px;
   font-size: 13px;
   color: var(--accent);
@@ -192,17 +196,7 @@ button { font-family: inherit; cursor: pointer; }
   display: block;
 }
 
-/* ---------- 返回条（博客 / 文章 / 幕后 页首，含底部发丝线） ---------- */
-.page-backbar {
-  height: 72px;
-  background: var(--bg);
-  border-bottom: 1px solid var(--hairline);
-}
-.back-inner {
-  height: 72px;
-  display: flex;
-  align-items: center;
-}
+/* ---------- 返回链接（文章缺失态等） ---------- */
 .back-link {
   color: var(--backlink);
   font-size: 14px;
@@ -210,37 +204,72 @@ button { font-family: inherit; cursor: pointer; }
 }
 .back-link:hover { color: var(--text-2); }
 
-/* ---------- 区块通用 ---------- */
-/* 仅设置上下内边距，左右留白由 .site 提供（避免 shorthand 覆盖 gutter） */
+/* ---------- 区块通用 · 瑞士非对称栅格 + 可见竖向骨架线 ---------- */
 .section {
-  padding-top: 76px;
-  padding-bottom: 56px;
+  padding-top: 104px;
+  padding-bottom: 80px;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: stretch;
+  border-top: 1px solid var(--hairline);
+}
+/* 紧凑型（幕后各小节等） */
+.section.compact {
+  padding-top: 52px;
+  padding-bottom: 52px;
+}
+/* 左侧栏：分区编号 + 标签；右侧细发丝竖线强化骨架 */
+.sec-index {
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  padding-top: 4px;
+  padding-right: 48px;
+  border-right: 1px solid var(--hairline);
 }
-.section.about   { gap: 20px; }
-.section.projects,
-.section.blog    { gap: 24px; }
+.sec-no {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+.sec-tag {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--text-4);
+}
+.sec-main {
+  min-width: 0;
+  padding-left: 48px;
+}
 .hairline-b { border-bottom: 1px solid var(--hairline); }
 
 /* ============================================================
    响应式：保留 1200 画布，窄屏重排（通用响应式）
    ============================================================ */
 @media (max-width: 1280px) {
-  :root { --gutter: 28px; }
+  :root { --gutter: 48px; }
 }
 @media (max-width: 1024px) {
-  :root { --gutter: 24px; }
+  :root { --gutter: 40px; }
   .h-page { font-size: 25px; }
   .h-section { font-size: 19px; }
 }
 @media (max-width: 768px) {
-  :root { --gutter: 18px; }
+  :root { --gutter: 32px; }
   .site { padding-left: var(--gutter); padding-right: var(--gutter); }
-  .section { padding-top: 52px; padding-bottom: 40px; }
-  .section.about,
-  .section.projects,
-  .section.blog { gap: 18px; }
+  .section { grid-template-columns: 1fr; padding-top: 52px; padding-bottom: 40px; }
+  .sec-index {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+    padding-right: 0;
+    border-right: none;
+    margin-bottom: 22px;
+  }
+  .sec-main { padding-left: 0; }
   .h-page { font-size: 22px; }
   .h-section { font-size: 17px; }
   .lead { font-size: 15px; line-height: 27px; }
@@ -249,7 +278,7 @@ button { font-family: inherit; cursor: pointer; }
   .skills > * { min-width: 0; }
 }
 @media (max-width: 480px) {
-  :root { --gutter: 14px; }
+  :root { --gutter: 24px; }
 }
 
 /* ---------- 标题进场：微位移淡入（0.3s） ---------- */

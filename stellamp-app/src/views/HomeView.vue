@@ -14,74 +14,93 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
 
 <template>
   <div class="home-view">
-  <!-- Hero：全宽背景，内容居中 -->
+  <!-- Hero：全宽浅色封面，左文右引两栏 -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-inner site">
-      <p class="kicker">STELLAMP.ME — 线上创作集</p>
-      <h1 class="hero-name">Stellamp</h1>
-      <p class="hero-handle">@prideplayer</p>
-      <span class="rule"></span>
-      <p class="hero-identity">独立开发者 · 维基与同人宇宙的搭建者</p>
-      <p class="hero-statement">
-        在网络上写代码、做网站、搭百科——把喜欢的电影宇宙和深夜灵感，变成别人也能走进去的小世界。这里收录我这些年的线上作品与折腾。
-      </p>
+      <div class="hero-main">
+        <p class="kicker">STELLAMP.ME</p>
+        <h1 class="hero-name">Stellamp</h1>
+        <p class="hero-handle">@prideplayer</p>
+        <span class="rule"></span>
+        <p class="hero-identity">开发者 · 制作者 · 写作者</p>
+        <p class="hero-statement">
+          人是寻求意义的动物，每个人都在追求生命的意义，从而人不能被单一定义，所有的兴趣所有的向往构成了人的本身。
+        </p>
+      </div>
+      <aside class="hero-quote">
+        <blockquote class="hq-inner">
+          <p class="hq-line">我一直要活到我能够</p>
+          <p class="hq-line">历数前生，你能够</p>
+          <p class="hq-line">与我一同笑看，所以</p>
+          <p class="hq-line">死与你我从不相干。</p>
+          <cite class="hq-cite">——史铁生</cite>
+        </blockquote>
+      </aside>
     </div>
   </section>
 
   <!-- 01 关于 -->
   <section id="about" class="section site about">
-    <p class="kicker">01 — 关于</p>
-    <h2 class="h-page">关于</h2>
-    <span class="title-rule"></span>
-    <p class="body about-p">
-      Stellamp 是我的网络身份，也是这个博客的名字。我在网络上写代码、做网站、搭百科，把喜欢的电影宇宙和零散的灵感，慢慢攒成别人也能走进去的小世界。
-    </p>
-    <p class="body about-p">
-      这里收的，是我这些年做过的线上作品——星空壁纸软件、流浪地球系列百科与同人站、歌词画报工具，其中有独立完成的，也有和团队一起做的。现实里的我另有轨迹，但那一部分，我把它收进了幕后（一个需要答对几个小问题才能进入的页面）。比起把履历摊开，我更想先让你看见作品本身。
-    </p>
+    <div class="sec-index">
+      <span class="sec-no">01</span>
+      <span class="sec-tag">关于</span>
+    </div>
+    <div class="sec-main">
+      <p class="body about-p">
+        Stellamp 是这个博客的名字。写代码、做网站、写文章，收集灵感，构建世界。
+      </p>
+    </div>
   </section>
 
   <!-- 02 作品 -->
   <section id="projects" class="section site projects">
-    <p class="kicker">02 — 作品 · 线上创作</p>
-    <h2 class="h-page">线上作品</h2>
-    <span class="title-rule"></span>
-    <p class="sub projects-intro">下面是这几年我做过的线上项目——工具、百科与同人站。观星记 Starte 与 Lyrics Share 是与 zestela 团队共同开发的；United Earth Wiki 与 United Earth Government 则是我和 United Earth Team（UET）联合制作的。</p>
-    <div class="projects-grid">
-      <ProjectCard
-        v-for="p in projects"
-        :key="p.name"
-        :name="p.name"
-        :desc="p.desc"
-        :tag="p.tag"
-        :url="p.url"
-        :team="p.team"
-        :team-name="p.teamName"
-        :team-url="p.teamUrl"
-      />
+    <div class="sec-index">
+      <span class="sec-no">02</span>
+      <span class="sec-tag">作品</span>
+    </div>
+    <div class="sec-main">
+      <p class="sub projects-intro">下面是这几年我做过的线上项目——工具、百科、同人站，以及两款可以亲自走进去玩的线上游戏。观星记 Starte 与 Lyrics Share 是与 zestela 团队共同开发的；United Earth Wiki 与 United Earth Government 则是我和 United Earth Team（UET）联合制作的。</p>
+      <div class="projects-grid">
+        <ProjectCard
+          v-for="(p, i) in projects"
+          :key="p.name"
+          :no="i + 1"
+          :name="p.name"
+          :desc="p.desc"
+          :tag="p.tag"
+          :url="p.url"
+          :team="p.team"
+          :team-name="p.teamName"
+          :team-url="p.teamUrl"
+        />
+      </div>
     </div>
   </section>
 
   <!-- 03 博客 -->
   <section id="blog" class="section site blog">
-    <p class="kicker">03 — 博客</p>
-    <h2 class="h-page">博客</h2>
-    <span class="title-rule"></span>
-    <p class="sub blog-desc">平时写的一些东西——项目复盘、设计随笔、折腾记录。下面挑了几篇最近的。</p>
-    <p v-if="apiMode && usingFallback" class="api-warn">{{ apiError }}</p>
-    <div class="blog-list">
-      <BlogPostRow
-        v-for="p in teaserPosts"
-        :key="p.slug"
-        variant="mini"
-        :meta="p.meta"
-        :title="p.title"
-        :excerpt="p.excerpt"
-        :slug="p.slug"
-      />
+    <div class="sec-index">
+      <span class="sec-no">03</span>
+      <span class="sec-tag">博客</span>
     </div>
-    <router-link to="/blog" class="btn-text more">阅读全部 →</router-link>
+    <div class="sec-main">
+      <p class="sub blog-desc">平时写的一些东西——项目复盘、设计随笔、折腾记录。下面挑了几篇最近的。</p>
+      <p v-if="apiMode && usingFallback" class="api-warn">{{ apiError }}</p>
+      <div class="blog-list">
+        <BlogPostRow
+          v-for="(p, i) in teaserPosts"
+          :key="p.slug"
+          variant="mini"
+          :index="i + 1"
+          :meta="p.meta"
+          :title="p.title"
+          :excerpt="p.excerpt"
+          :slug="p.slug"
+        />
+      </div>
+      <router-link to="/blog" class="btn-text more">阅读全部 →</router-link>
+    </div>
   </section>
   </div>
 </template>
@@ -92,46 +111,38 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
   position: relative;
   overflow: hidden;
   width: 100%;
-  padding-top: 120px;
-  padding-bottom: 104px;
+  padding-top: 144px;
+  padding-bottom: 120px;
 }
 .hero-inner {
   position: relative;
   z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 64px;
+  align-items: center;
+  text-align: left;
+}
+.hero-main {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: flex-start;
+  gap: 22px;
 }
-/* 极淡星空渐变 + 噪点背景（仅 Hero） */
+/* 瑞士国际主义：Hero 扁平纯白，不堆氛围光；背景透明以透出全局竖向规线 */
 .hero-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background:
-    radial-gradient(1.2px 1.2px at 18% 28%, rgba(236,233,240,0.55), transparent 60%),
-    radial-gradient(1px 1px at 72% 18%, rgba(236,233,240,0.45), transparent 60%),
-    radial-gradient(1.4px 1.4px at 38% 62%, rgba(236,233,240,0.40), transparent 60%),
-    radial-gradient(1px 1px at 84% 52%, rgba(236,233,240,0.35), transparent 60%),
-    radial-gradient(1px 1px at 54% 40%, rgba(236,233,240,0.30), transparent 60%),
-    radial-gradient(1.2px 1.2px at 28% 80%, rgba(236,233,240,0.30), transparent 60%),
-    /* 雾紫环境光：横贯整幅宽度的线性渐变，顶部左右都铺到，向下淡出 */
-    linear-gradient(180deg, rgba(138,123,176,0.13) 0%, rgba(138,123,176,0.04) 38%, transparent 72%);
-}
-.hero-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
-  opacity: 0.035;
-  mix-blend-mode: screen;
+  background: transparent;
 }
 .hero-name {
   font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 46px;
-  line-height: 1.08;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  font-size: clamp(48px, 7vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
   color: var(--text-1);
   margin: 0;
   animation: titleIn 0.3s ease both;
@@ -141,20 +152,52 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
   color: var(--text-3);
   font-family: var(--font-sans);
   margin: 0;
+  letter-spacing: 0.02em;
 }
 .hero-identity {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
+  letter-spacing: 0.14em;
   color: var(--text-2);
   font-family: var(--font-sans);
   margin: 0;
 }
 .hero-statement {
-  font-size: 16px;
-  line-height: 29px;
+  font-size: 17px;
+  line-height: 31px;
   color: var(--text-3);
-  max-width: 660px;
+  max-width: 600px;
   margin: 0;
+}
+/* ---------- Hero 右侧 · 史铁生引言（大号衬线次主角） ---------- */
+.hero-quote { align-self: center; }
+.hq-inner {
+  margin: 0;
+  text-align: right;
+  padding-left: 0;
+  padding-right: 28px;
+  border-left: none;
+  border-right: 3px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.hq-line {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: var(--text-1);
+  margin: 0;
+}
+.hq-cite {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin: 8px 0 0;
 }
 /* 标题下更轻的发丝分隔 */
 .title-rule {
@@ -172,11 +215,9 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
 .blog-desc { max-width: 760px; margin: 0; }
 
 .projects-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  display: block;
   max-width: var(--content);
-  margin-top: 0;
+  margin-top: 28px;
 }
 .blog-list {
   display: flex;
@@ -190,9 +231,9 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
 .api-warn {
   font-size: 13px;
   line-height: 22px;
-  color: #E2A0A0;
-  background: rgba(226, 160, 160, 0.08);
-  border: 1px solid rgba(226, 160, 160, 0.25);
+  color: #B4453E;
+  background: rgba(180, 69, 62, 0.08);
+  border: 1px solid rgba(180, 69, 62, 0.25);
   border-radius: 8px;
   padding: 10px 14px;
   max-width: var(--content);
@@ -207,11 +248,21 @@ const teaserPosts = computed(() => posts.value.slice(0, 3))
 }
 
 @media (max-width: 768px) {
-  .hero { padding-top: 80px; padding-bottom: 68px; }
-  .hero-name { font-size: 38px; }
-  .projects-grid { grid-template-columns: 1fr; }
+  .hero { padding-top: 104px; padding-bottom: 88px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 44px; align-items: start; }
+  .hero-quote { align-self: start; }
+  /* 手机端引用恢复左对齐（桌面端为右对齐） */
+  .hq-inner {
+    text-align: left;
+    padding-right: 0;
+    padding-left: 28px;
+    border-right: none;
+    border-left: 3px solid var(--accent);
+  }
+  .hq-line { font-size: 24px; }
+  .projects-grid { grid-template-columns: 1fr; margin-top: 24px; }
 }
 @media (max-width: 480px) {
-  .hero-name { font-size: 32px; }
+  .hero { padding-top: 84px; padding-bottom: 72px; }
 }
 </style>

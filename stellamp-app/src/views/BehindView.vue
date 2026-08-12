@@ -1,96 +1,109 @@
 <script setup>
 import { behind } from '../data/content'
+import Breadcrumb from '../components/Breadcrumb.vue'
 </script>
 
 <template>
   <div class="behind-view">
-    <header class="page-backbar">
-      <div class="site back-inner">
-        <router-link to="/" class="back-link">← 返回 Stellamp</router-link>
+    <Breadcrumb current="幕后" />
+
+    <section class="section site behind-head">
+      <div class="sec-index">
+        <span class="sec-no">00</span>
+        <span class="sec-tag">幕后</span>
       </div>
-    </header>
-    <div class="site behind-body">
-      <div class="behind-title">
-        <p class="kicker">幕后 · 现实生活经历</p>
-        <h1 class="h-page">幕后</h1>
-        <p class="lead">
-          这些是现实里的经历——学校、任职、模联、兴趣与荣誉。仅对愿意多了解我的人开放。
-        </p>
+      <div class="sec-main">
+        <p class="lead behind-lead">这些是现实里的经历——学校、任职、模联、兴趣与荣誉。仅对愿意多了解我的人开放。</p>
       </div>
+    </section>
 
     <!-- 教育经历 -->
-    <section class="block">
-      <h2 class="h-section">教育经历</h2>
-      <ul class="resume">
-        <li v-for="(e, i) in behind.education" :key="i" class="resume-row">
-          <span class="r-title">{{ e.title }}</span>
-          <span class="r-meta">{{ e.meta }}</span>
-        </li>
-      </ul>
+    <section class="section site block compact">
+      <div class="sec-index">
+        <span class="sec-no">01</span>
+        <span class="sec-tag">教育经历</span>
+      </div>
+      <div class="sec-main">
+        <ul class="resume">
+          <li v-for="(e, i) in behind.education" :key="i" class="resume-row">
+            <span class="r-title">{{ e.title }}</span>
+            <span class="r-meta">{{ e.meta }}</span>
+          </li>
+        </ul>
+      </div>
     </section>
 
     <!-- 任职经历 -->
-    <section class="block">
-      <h2 class="h-section">任职经历</h2>
-      <ul class="resume">
-        <li v-for="(r, i) in behind.roles" :key="i" class="resume-row resume-role">
-          <div class="r-head">
-            <span class="r-title">{{ r.title }}</span>
-            <span class="r-meta">{{ r.meta }}</span>
-          </div>
-          <p v-if="r.desc" class="r-desc">{{ r.desc }}</p>
-        </li>
-      </ul>
+    <section class="section site block compact">
+      <div class="sec-index">
+        <span class="sec-no">02</span>
+        <span class="sec-tag">任职经历</span>
+      </div>
+      <div class="sec-main">
+        <ul class="resume">
+          <li v-for="(r, i) in behind.roles" :key="i" class="resume-row resume-role">
+            <div class="r-head">
+              <span class="r-title">{{ r.title }}</span>
+              <span class="r-meta">{{ r.meta }}</span>
+            </div>
+            <p v-if="r.desc" class="r-desc">{{ r.desc }}</p>
+          </li>
+        </ul>
+      </div>
     </section>
 
     <!-- 模拟联合国 -->
-    <section class="block">
-      <h2 class="h-section">模拟联合国</h2>
-      <ul class="resume">
-        <li v-for="(m, i) in behind.mun" :key="i" class="resume-row">
-          <span class="r-title">{{ m.title }}</span>
-          <span class="r-meta">{{ m.meta }}</span>
-        </li>
-      </ul>
+    <section class="section site block compact">
+      <div class="sec-index">
+        <span class="sec-no">03</span>
+        <span class="sec-tag">模拟联合国</span>
+      </div>
+      <div class="sec-main">
+        <ul class="resume">
+          <li v-for="(m, i) in behind.mun" :key="i" class="resume-row">
+            <span class="r-title">{{ m.title }}</span>
+            <span class="r-meta">{{ m.meta }}</span>
+          </li>
+        </ul>
+      </div>
     </section>
 
     <!-- 技能与兴趣 -->
-    <section class="block">
-      <h2 class="h-section">技能与兴趣</h2>
-      <div class="skills">
-        <div v-for="(s, i) in behind.skills" :key="i" class="skill card">
-          <p class="s-label">{{ s.label }}</p>
-          <p class="s-content">{{ s.content }}</p>
+    <section class="section site block compact">
+      <div class="sec-index">
+        <span class="sec-no">04</span>
+        <span class="sec-tag">技能与兴趣</span>
+      </div>
+      <div class="sec-main">
+        <div class="skills">
+          <div v-for="(s, i) in behind.skills" :key="i" class="skill card">
+            <p class="s-label">{{ s.label }}</p>
+            <p class="s-content">{{ s.content }}</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- 荣誉 -->
-    <section class="block block-last">
-      <h2 class="h-section">荣誉</h2>
-      <ul class="honors">
-        <li v-for="(h, i) in behind.honors" :key="i" class="honor card">
-          <span class="h-award">{{ h.award }}</span>
-          <span class="h-meta">{{ h.meta }}</span>
-        </li>
-      </ul>
+    <section class="section site block compact block-last">
+      <div class="sec-index">
+        <span class="sec-no">05</span>
+        <span class="sec-tag">荣誉</span>
+      </div>
+      <div class="sec-main">
+        <ul class="honors">
+          <li v-for="(h, i) in behind.honors" :key="i" class="honor card">
+            <span class="h-award">{{ h.award }}</span>
+            <span class="h-meta">{{ h.meta }}</span>
+          </li>
+        </ul>
+      </div>
     </section>
-    </div>
   </div>
 </template>
 
 <style scoped>
-.behind-body { padding-bottom: 100px; }
-.behind-title {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 60px 0 20px;
-}
-.behind-title .lead { max-width: 640px; margin: 0; }
-
-.block { margin-bottom: 56px; max-width: var(--content); }
-.block-last { margin-bottom: 0; }
+.behind-lead { max-width: 640px; margin: 0; }
 
 .resume { list-style: none; margin: 0; padding: 0; }
 .resume-row {

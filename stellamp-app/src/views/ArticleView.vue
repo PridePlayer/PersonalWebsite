@@ -2,6 +2,7 @@
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useArticle, usePosts } from '../data/useContent'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 const props = defineProps({
   slug: { type: String, required: true }
@@ -31,17 +32,16 @@ function go(slug) {
 
 <template>
   <div class="article-shell">
+    <Breadcrumb current="文章" />
   <div v-if="loading" class="site loading">加载中…</div>
 
-    <div v-else-if="article" class="article-view">
-    <p v-if="apiMode && usingFallback" class="api-warn">{{ apiError }}</p>
-    <!-- 返回条（含底部发丝线） -->
-    <header class="page-backbar">
-      <div class="site back-inner">
-        <router-link to="/blog" class="back-link">← 返回博客</router-link>
+    <section v-else-if="article" class="section site art-section">
+      <div class="sec-index">
+        <span class="sec-no">文章</span>
+        <span class="sec-tag">{{ article.date }}</span>
       </div>
-    </header>
-
+      <div class="sec-main">
+    <p v-if="apiMode && usingFallback" class="api-warn">{{ apiError }}</p>
     <article class="article-col">
       <div class="art-head">
         <p class="kicker">{{ article.kicker }}</p>
@@ -50,13 +50,6 @@ function go(slug) {
         <p class="art-meta">{{ article.date }} · {{ article.readTime }}</p>
         <span class="rule"></span>
       </div>
-
-      <figure v-if="article.cover !== undefined" class="art-cover">
-        <img v-if="article.cover" :src="article.cover" :alt="article.title" class="art-cover-img" />
-        <span v-else class="art-cover-label">{{ article.title }}</span>
-      </figure>
-
-      <p class="art-lead">{{ article.lead }}</p>
 
       <div class="blocks">
         <template v-for="(b, i) in article.blocks" :key="i">
@@ -85,7 +78,7 @@ function go(slug) {
       </div>
     </article>
 
-    <nav class="site art-foot">
+    <nav class="art-foot">
       <button v-if="neighbors.prev" class="foot-link" @click="go(neighbors.prev.slug)">
         ← {{ neighbors.prev.title }}
       </button>
@@ -94,7 +87,8 @@ function go(slug) {
         {{ neighbors.next.title }} →
       </button>
     </nav>
-  </div>
+      </div>
+    </section>
 
   <div v-else class="site missing">
     <router-link to="/blog" class="back-link">← 返回博客</router-link>
@@ -106,16 +100,16 @@ function go(slug) {
 
 <style scoped>
 .article-shell { display: block; }
-.article-view { padding-bottom: 80px; }
+.art-section { padding-top: 64px; padding-bottom: 80px; }
 .loading { padding-top: 96px; padding-bottom: 140px; color: var(--text-4); font-size: 15px; }
 .api-warn {
   max-width: var(--art-col);
   margin: 0 auto;
   font-size: 13px;
   line-height: 22px;
-  color: #E2A0A0;
-  background: rgba(226, 160, 160, 0.08);
-  border: 1px solid rgba(226, 160, 160, 0.25);
+  color: #B4453E;
+  background: rgba(180, 69, 62, 0.08);
+  border: 1px solid rgba(180, 69, 62, 0.25);
   border-radius: 8px;
   padding: 10px 14px;
 }
@@ -129,7 +123,7 @@ function go(slug) {
 
 .article-col {
   max-width: var(--art-col);
-  margin: 0 auto;
+  margin: 0;
 }
 .art-head {
   display: flex;
@@ -158,28 +152,6 @@ function go(slug) {
   font-family: var(--font-sans);
   margin: 0;
 }
-.art-lead {
-  font-size: 17px;
-  line-height: 30px;
-  color: var(--text-2);
-  margin: 32px 0 8px;
-}
-
-.art-cover {
-  margin: 40px 0 0;
-  width: 100%;
-  aspect-ratio: 700 / 380;
-  background: var(--placeholder);
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.art-cover-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.art-cover-label { color: var(--text-4); font-size: 14px; font-family: var(--font-sans); }
-
 .blocks { margin-top: 16px; }
 .b-h2 {
   font-family: var(--font-serif);

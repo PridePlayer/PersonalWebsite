@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 const props = defineProps({
@@ -6,38 +7,56 @@ const props = defineProps({
   title: { type: String, required: true },
   excerpt: { type: String, required: true },
   slug: { type: String, required: true },
-  // mini = 首页三篇预览；full = 博客列表页
-  variant: { type: String, default: 'full' }
+  variant: { type: String, default: 'full' },
+  index: { type: Number, default: 0 }
 })
 const router = useRouter()
+const noLabel = computed(() => String(props.index).padStart(2, '0'))
 function open() {
-  router.push(`/blog/${props.slug}`)
+  router.push('/blog/' + props.slug)
 }
 </script>
 
 <template>
   <article class="post" :class="variant" @click="open">
-    <p class="p-meta">{{ meta }}</p>
-    <h3 class="p-title">{{ title }}</h3>
-    <p class="p-excerpt">{{ excerpt }}</p>
-    <span class="p-more">阅读 →</span>
+    <span class="p-no">{{ noLabel }}</span>
+    <div class="p-body">
+      <p class="p-meta">{{ meta }}</p>
+      <h3 class="p-title">{{ title }}</h3>
+      <p class="p-excerpt">{{ excerpt }}</p>
+      <span class="p-more">阅读 →</span>
+    </div>
   </article>
 </template>
 
 <style scoped>
-/* 设计稿：博客条目无背景、无边框，仅纵向留白 */
 .post {
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 24px;
   transition: opacity 0.15s ease;
 }
 .post:hover { opacity: 0.82; }
 .post:hover .p-title { color: var(--accent); }
 
-.post.mini { padding: 22px 0; gap: 6px; }
-.post.full { padding: 28px 0; gap: 8px; }
+.post.mini { padding: 22px 0; }
+.post.full { padding: 28px 0; }
 
+.p-no {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--text-4);
+  padding-top: 4px;
+}
+.p-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
 .p-meta {
   font-size: 13px;
   color: var(--text-4);

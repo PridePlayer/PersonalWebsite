@@ -5,13 +5,18 @@ import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import PrivacyModal from './components/PrivacyModal.vue'
 
-// 设计稿：首页用导航头（含品牌/关于/作品/博客/幕后）；
-// 博客、文章、幕后页用各自的「返回条」，不再显示导航头。
+// 首页、博客相关页面（列表 / 文章）、幕后页 均显示统一导航头；
+// 幕后页进入前需经隐私验证弹窗。
 const route = useRoute()
-const showNav = computed(() => route.path === '/')
+const showNav = computed(() =>
+  route.path === '/' ||
+  route.path.startsWith('/blog') ||
+  route.path.startsWith('/behind')
+)
 </script>
 
 <template>
+  <div class="bg-vlines" aria-hidden="true"></div>
   <SiteHeader v-if="showNav" />
   <main class="view">
     <router-view v-slot="{ Component }">
@@ -25,6 +30,20 @@ const showNav = computed(() => route.path === '/')
 </template>
 
 <style>
+/* 全屏竖向栏规线：fixed 背景层，贯穿整页滚动，z-index:-1 沉到内容之下 */
+.bg-vlines {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--vline) 0,
+    var(--vline) 1px,
+    transparent 1px,
+    transparent var(--vline-gap)
+  );
+}
 .view {
   min-height: calc(100vh - 72px);
   padding-bottom: 0;
