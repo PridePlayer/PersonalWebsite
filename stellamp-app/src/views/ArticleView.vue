@@ -259,14 +259,20 @@ function go(slug) {
 
 @media (max-width: 768px) {
   .art-title { font-size: 25px; }
-  /* 移动端去掉冗余的左右内边距：屏幕边距已由 .site 的 --gutter 提供，
-     否则会叠加成 ~56px 每侧，正文太窄不利于阅读 */
   .article-col { padding: 0; }
   .art-head { padding-top: 40px; }
   .art-foot { padding-left: 0; padding-right: 0; }
+  /* 文章页读数：突破 .site 全局 gutter，改用更窄的阅读边距，正文更宽更好读
+     （仅作用于文章页，不影响首页/博客列表等其他页） */
+  .art-section {
+    margin-left: calc(-1 * var(--gutter));
+    margin-right: calc(-1 * var(--gutter));
+    padding-left: 22px;
+    padding-right: 22px;
+  }
 }
-/* 超窄屏：文章页单独把 gutter 收到 20px，进一步拓宽阅读栏 */
+/* 超窄屏：阅读边距进一步收到 16px，手机上更舒适 */
 @media (max-width: 480px) {
-  .art-section { --gutter: 20px; }
+  .art-section { padding-left: 16px; padding-right: 16px; }
 }
 </style>
