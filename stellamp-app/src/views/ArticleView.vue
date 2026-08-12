@@ -259,8 +259,14 @@ function go(slug) {
 
 @media (max-width: 768px) {
   .art-title { font-size: 25px; }
-  .article-col { padding: 0 24px; }
+  /* 移动端去掉冗余的左右内边距：屏幕边距已由 .site 的 --gutter 提供，
+     否则会叠加成 ~56px 每侧，正文太窄不利于阅读 */
+  .article-col { padding: 0; }
   .art-head { padding-top: 40px; }
-  .art-foot { padding-left: 24px; padding-right: 24px; }
+  .art-foot { padding-left: 0; padding-right: 0; }
+}
+/* 超窄屏：文章页单独把 gutter 收到 20px，进一步拓宽阅读栏 */
+@media (max-width: 480px) {
+  .art-section { --gutter: 20px; }
 }
 </style>
