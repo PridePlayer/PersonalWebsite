@@ -5,7 +5,7 @@
 ## 目录结构
 
 ```
-stellamp-api/
+api/
 ├── index.php        # 前端控制器：API 路由 + 后台页面
 ├── config.php       # 配置（文章目录、后台密码）
 ├── lib/markdown.php # 自写 Markdown + frontmatter 解析器（无外部依赖）
@@ -18,7 +18,7 @@ stellamp-api/
 
 ## 部署步骤
 
-1. **上传到服务器**：把整个 `stellamp-api/` 放到站点下某个目录，例如 `https://stellamp.me/api/`。
+1. **上传到服务器**：把整个 `api/` 目录放到站点下某个目录，例如 `https://stellamp.me/api/`。
 2. **改密码**：打开 `config.php`，把 `admin_password` 改成你自己的强密码。
 3. **保证可写**：让 `posts/` 目录对 PHP 进程可写（`chmod 755` 或按主机面板设写权限）。
 4. **（Apache）重写**：`.htaccess` 已内置；如果用 Nginx，加一条：
@@ -60,7 +60,7 @@ lead: 开篇导语（可选，不写则取正文第一段）。
 登录后台：直接访问 `https://你的站/api/`（目录首页即后台），或 `https://你的站/api/admin`，或显式 `https://你的站/api/?r=admin`。
 
 1. 输入后台密码登录。
-2. 选一个 `.md` 文件上传，立即发布。
+2. 点「选择 .md 文章」可**一次多选**多个 `.md` 文件，点「上传并发布」批量发布；页面会逐条列出每篇的结果（✓ 已发布并显示 slug / ✗ 失败原因），例如一次传 5 篇、其中 4 篇成功、1 篇因非 `.md` 被跳过。
 3. 前端刷新即可看到新文章（前端通过 `?r=posts` 列表、`?r=posts/<slug>` 单篇 实时获取）。
 
 ## 前端如何连上后台
